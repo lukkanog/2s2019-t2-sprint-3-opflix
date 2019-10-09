@@ -4,9 +4,37 @@ import Nav from "../../components/Nav/Nav";
 
 import "../../assets/css/App.css";
 
+
+import {Link} from "react-router-dom";
+import Axios from 'axios';
+import jureg from "../../assets/img/jureg-teste.png";
+import estrelinha from "../../assets/img/estrela.png"
+
 class App extends Component {
   constructor(){
     super();
+    this.state = {
+      lancamentos : [],
+      usuario : null,
+      quantExibida : 5,
+    }
+  }
+
+  componentDidMount(){
+    let url = "http://localhost:5000/api/lancamentos";
+    
+    Axios.get(url)
+    .then(response =>{
+      if (response.status === 200 ){
+        this.setState({lancamentos : response.data});
+        console.log(this.state)
+      }else{
+        console.log("ipa deu ruim" + response.status)
+      }
+    })
+    .catch(error => console.log(error))
+
+    
   }
   
   render(){
@@ -18,7 +46,6 @@ class App extends Component {
         
         </header>
         
-        <main>
 
           {/* Banner */}
           <section className="container banner">
@@ -29,29 +56,66 @@ class App extends Component {
               </div>
 
               <div id="textgroup_banner">
-                <p id="texto_banner">Os principais lançamentos
-                    do mundo cinematográfico
-                    na sua mão!
-                </p>
+                <p id="texto_banner">Os principais lançamentos do mundo cinematográfico na sua mão!</p>
                 <a id="link_banner">Comece agora</a>
               </div>
 
             </div>
           </section>
 
+        <main>
           <section className="conteudo_lancamentos container">
             <div className="content">
               <h3>Lançamentos chegando</h3>
-              <div className="box_lancamento">
-                <h4 className="titulo_lancamento">Vingadores</h4>
-                <p className="caracteristicas_lancamento"><b>Tipo:</b>Filme</p>
-                <p className="caracteristicas_lancamento"><b>Gênero:</b>Ficção</p>
-                <p className="caracteristicas_lancamento"><b>Plataforma:</b>Cinema</p>
-                <p className="caracteristicas_lancamento"><b>Duração:</b>182min</p>
-                <p className="caracteristicas_lancamento sinopse" ><b>Sinopse:</b>Homem de Ferro, Thor, Hulk e os Vingadores se unem para combater seu inimigo mais poderoso,o maligno Thanos. Em uma missão para coletar todas as seis pedras infinitas, Thanos planeja usá-las para infligir sua vontade maléfica sobre a realidade</p>
-              
-                <h5 className="data_lancamento">16/09/2030</h5>
-              </div>
+
+              {this.state.lancamentos.map(element =>{
+
+                let data = element.dataLancamento.split("T")[0];
+                let ano = data.split("-")[0];
+                let mes = data.split("-")[1];
+                let dia = data.split("-")[2];
+
+                element.dataLancamento = dia + "/" + mes + "/" + ano;
+
+
+                for (let i = 0; i < this.state.quantExibida; i++) {
+                  return(
+                    <div className="box_lancamento">
+                    <div className="textos_e_capa">
+                      <div>
+                        <h4 className="titulo_lancamento">{element.titulo}</h4>
+                        <p className="caracteristicas_lancamento"><b>Tipo: </b>{element.idTipoLancamentoNavigation.nome}</p>
+                        <p className="caracteristicas_lancamento"><b>Gênero: </b>{element.idCategoriaNavigation.nome}</p>
+                        <p className="caracteristicas_lancamento"><b>Plataforma: </b>{element.idPlataformaNavigation.nome}</p>
+                        {element.idTipoLancamentoNavigation.nome == "Serie" ? 
+                        <p className="caracteristicas_lancamento"><b>Duração: </b>{element.duracao + " minutos por episódio"}</p>
+                        :
+                        <p className="caracteristicas_lancamento"><b>Duração: </b>{element.duracao + " minutos"}</p>
+                        }
+
+                        <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
+                      </div>
+                      <div>
+                        <img src={jureg} className="capa_lancamento"/>   
+                      </div>
+                    </div>
+
+                    <div className="data_e_btn">
+                      <p className="data_lancamento">{element.dataLancamento}</p>
+                    
+                    <button className="btn_favoritar">
+                      <img src={estrelinha} className="estrelinha_btn_favoritar"/>
+                      <p className="texto_btn_favoritar">Adicionar aos favoritos</p>
+                    </button>
+                    </div>
+
+                  </div>
+                  )
+                }
+                
+                })}
+                
+
             </div>
           </section>
       

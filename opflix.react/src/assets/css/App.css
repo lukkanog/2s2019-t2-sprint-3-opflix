@@ -4,6 +4,16 @@
   font-family: "Century Gothic"
 }
 
+a{
+  text-decoration: none;
+  color:#fff;
+  cursor:pointer;
+}
+
+button{
+  cursor:pointer;
+}
+
 @font-face{
   font-family: "Gayathri";
   src: url("../../assets/fonts/Gayathri/Gayathri-Regular.ttf");
@@ -26,7 +36,7 @@
 }
 
 .content{
-  width : 85%;
+  width : 80%;
   margin: auto;
 }
 
@@ -35,13 +45,19 @@
   color: #fff;
   /* box-shadow:0 5em  20em #6b020d; */
   position: fixed;
+  z-index : 1000;
 
+}
+
+#link_home{
+  text-decoration: none;
+  color: #fff;
 }
 
 h1{
   font-family: "Gayathri", sans-serif;
   font-size: 3.5rem;
-  padding-top: 0.45em;
+  padding-top: 0.35em;
 }
 
 .flexbox_nav{
@@ -57,12 +73,28 @@ h1{
   justify-content: space-between;
   align-items:center;
   width: 50%;
-  font-size: 1.2em;
+  font-size: 1.1em;
+}
+
+.option_nav a{
+  transition:0.8s ;
+  -webkit-transition: 0.8s ;
+  cursor: pointer;
+}
+
+.option_nav a:hover{
+  color: #F2EB12;
 }
 
 #login_nav{
   padding: 0.6em 1em;
   border: 2px solid #fff;
+  transition: 0.6s;
+  -webkit-transition: 0.6s;
+}
+
+#login_nav:hover{
+ border: 2px solid #F2EB12; 
 }
 
 #sair_nav{
@@ -76,6 +108,13 @@ h1{
 
 .Nav img{
   height: 5rem;
+  transition: 1s;
+  -webkit-transition: 1s;
+}
+
+.Nav img:hover{
+  transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
 }
 
 /************************** BANNER **************************/
@@ -145,22 +184,67 @@ h1{
 .conteudo_lancamentos .content h3{
   font-family: "Nunito Bold", sans-serif;
   font-size: 2em;
+  margin-bottom: 1.5em;
+}
+
+.conteudo_lancamentos .content h3::after{
+  background-color: #A60313;
+  content: "";
+  display: block;
+  height: 3px;
+  position: absolute;
+  margin-top: 10px;
+  width: 80%;
+  transform: translateX(-50%);
+  left: 50%;
+  opacity: 0.7;
 }
 
 .box_lancamento{
   border:1px solid grey;
   border-radius: 1em;
-
+  margin: 2em 0;
+  
   text-align: left;
   padding:1em;
+
+  
+  transition:0.2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+}
+
+.textos_e_capa{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+}
+
+.data_e_btn{
+  display:flex;
+  justify-content: space-between;
+}
+
+.box_lancamento:hover{
+  box-shadow: 2px 2px 20px #A60313;
+
+}
+
+.capa_lancamento{
+  height:15em;
+  margin-right: 4em;
+  box-shadow: 1px 1px 15px #000;
+  position:relative;
+  top:1em;
 }
 
 .box_lancamento h4{
-  font-size: 2em;
+  font-size: 2.5em;
   margin-bottom:1em;
+  /* max-width: 90%; */
+
 }
 .caracteristicas_lancamento{
-  max-width: 66%;
+  max-width: 90%;
   text-align: justify;
   line-height: 1.5em;
 }
@@ -171,6 +255,44 @@ h1{
 
 .data_lancamento{
   font-size:1.6em;
+  font-weight: bolder;
   margin-top:1em;
   color: #11A7F2;
+}
+
+.btn_favoritar{
+  display: flex;
+  flex-flow:row-reverse;
+  align-items:center;
+  background-color: #fff;
+  padding-left: 1em;
+
+  border:0.5px 0.7px 0.5px 0.5px solid #00000031;
+  border-radius: 3em 3.2em 3.2em 3em;
+
+  position: relative;
+  /* top: 1.5em;
+  /* left: calc((100% - 85%)); */
+  /* left: 1.7em; */
+  top: 2.5em;
+  left: 3em;
+  z-index: 1;
+  
+}
+
+.btn_favoritar:hover{
+  box-shadow: 1px 1px 10px #A60313;
+}
+
+.estrelinha_btn_favoritar{
+  height:3em;
+  border:0.5px  solid #00000031;
+  border-radius: 3em;
+  padding:0.3em;
+  margin-left: 0.5em;
+  background-color: #A60313;
+}
+
+.texto_btn_favoritar{
+  font-size:1.4em;
 }

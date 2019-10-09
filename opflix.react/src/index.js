@@ -9,19 +9,21 @@ import {Route, Link, BrowserRouter as Router, Switch, Redirect} from "react-rout
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado';
 import Login from "./pages/Login/Login";
 
-const Routing = (
+const routing = (
     <Router>
         <div>
             <Switch>
                 <Route exact path="/" component={App}/>
-                <Route component={NaoEncontrado}/>
                 <Route path="/login" component={Login}/>
+
+                    {/* DEIXA ESSE POR ULTIMO */}
+                <Route component={NaoEncontrado}/>
             </Switch>
         </div>
     </Router>
 )
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(routing, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
