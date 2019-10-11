@@ -1,0 +1,32 @@
+*{
+    margin : 0;
+    padding: 0;
+}
+
+.Categorias main{
+    padding-top: 5em;
+}
+
+.Categorias h2{
+    margin:2em 0;
+    text-align: center;
+}
+
+#tabela_categorias{
+    width: 80%;
+    margin: auto;
+    box-shadow: #00000080 1px 1px 20px;
+    /* box-shadow: #00000080 -1px -1px 7px; */
+
+}
+
+#tabela_categorias thead{
+    background-color: #A60313;
+    color: #fff;
+}
+
+#linha_cabecalho_tabela{
+    height:1.6em;
+}
+
+

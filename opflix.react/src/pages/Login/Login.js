@@ -8,6 +8,7 @@ import Axios from "axios";
 export default class Login extends Component{
     constructor(){
         super();
+        localStorage.removeItem("usuario-opflix");
         this.state = {
             email : "",
             senha : "",
@@ -35,6 +36,10 @@ export default class Login extends Component{
         .then(response => {
             if (response.status === 200)
             {
+                localStorage.setItem("usuario-opflix", response.data.token);
+                this.props.history.push("/");
+
+                this.Nav.setState({usuarioEstaLogado : true});
                 console.log("deu bom")
             }
         })
@@ -42,12 +47,12 @@ export default class Login extends Component{
     }
 
 
-
-
     render(){
         return(
             <div className="Login">
-                <Nav/>
+                <header>
+                    <Nav/>
+                </header>
                 <main className="container">
                     <div className="content">
                 <h2>Entrar</h2> 

@@ -86,11 +86,11 @@ h1{
   color: #F2EB12;
 }
 
-#login_nav{
+#login_nav  {
   padding: 0.6em 1em;
   border: 2px solid #fff;
-  transition: 0.6s;
-  -webkit-transition: 0.6s;
+  transition: 0.6s ease-in-out;
+  -webkit-transition: 0.6s ease-in-out;
 }
 
 #login_nav:hover{
@@ -99,6 +99,15 @@ h1{
 
 #sair_nav{
   color: #F2EB12;
+  padding: 0.6em 1em;
+  /* border: 2px solid #fff; */
+  transition: 0.6s ;
+  -webkit-transition: 0.6s;
+  /* background-color: #A60313 ; */
+}
+
+#sair_nav:hover{
+  border: 2px solid #F2EB12; 
 }
 
 .logo_box{
