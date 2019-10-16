@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './pages/Home/App';
 import * as serviceWorker from './serviceWorker';
+import jsonwebtoken from "jsonwebtoken";
 
 
 import {Route, Link, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
@@ -10,6 +11,11 @@ import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado';
 import Login from "./pages/Login/Login";
 import Categorias from './pages/Categorias/Categorias';
 import Lancamentos from "./pages/Lancamentos/Lancamentos";
+import CadastrarLancamento from "./pages/Lancamentos/CadastrarLancamento";
+
+
+
+
 
 const RotaPrivada = ({component : Component}) =>(
     <Route
@@ -25,19 +31,19 @@ const RotaPrivada = ({component : Component}) =>(
     />    
 );
 
-// const RotaPrivadaAdm = ({component : Component}) =>(
-//     <Route
-//         render={props =>
-//             localStorage.getItem("usuario-opflix") !== null  ? (
-//             <Component {...props}/> 
-//         ) : (
-//                 <Redirect 
-//                 to={{pathname : "/login", state: {from : props.location}}}
-//                 />
-//             )
-//         }
-//     />    
-// );
+const RotaPrivadaAdm = ({component : Component}) =>(
+    <Route
+        render={props =>
+            localStorage.getItem("usuario-opflix") !== null  ? (
+            <Component {...props}/> 
+        ) : (
+                <Redirect 
+                to={{pathname : "/login", state: {from : props.location}}}
+                />
+            )
+        }
+    />    
+);
 
 const routing = (
     <Router>
@@ -46,14 +52,17 @@ const routing = (
                 <Route exact path="/" component={App}/>
                 <Route path="/login" component={Login}/>
                 <RotaPrivada path="/categorias" component={Categorias}/>
-                <RotaPrivada path="/lancamentos" component={Lancamentos}/>
+                <RotaPrivada exact path="/lancamentos" component={Lancamentos}/>
+                <RotaPrivada path="/lancamentos/cadastrar" component={CadastrarLancamento}/>
                 <RotaPrivada path="/plataformas"/>
+                <RotaPrivada path="/adm/lancamentos"/>
                     {/* DEIXA ESSE POR ULTIMO */}
                 <Route component={NaoEncontrado}/>
             </Switch>
         </div>
     </Router>
 )
+
 
 ReactDOM.render(routing, document.getElementById('root'));
 

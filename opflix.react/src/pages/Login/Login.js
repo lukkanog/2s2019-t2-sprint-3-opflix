@@ -38,8 +38,6 @@ export default class Login extends Component{
             {
                 localStorage.setItem("usuario-opflix", response.data.token);
                 this.props.history.push("/");
-
-                this.Nav.setState({usuarioEstaLogado : true});
                 console.log("deu bom")
             }
         })
@@ -56,14 +54,16 @@ export default class Login extends Component{
                 <main className="container">
                     <div className="content">
                 <h2>Entrar</h2> 
-                <form onSubmit={this.efetuarLogin}>
+                <form onSubmit={this.efetuarLogin} id="form_login">
                     <label>
                         Email
-                        <input onInput={this.atualizarEmail} type="email" placeholder="usuario@email.com"/>
+                        <br/>
+                        <input onInput={this.atualizarEmail} type="email" placeholder="usuario@email.com" className="input_login"/>
                     </label>
                     <label>
                         Senha
-                        <input onInput={this.atualizarSenha} type="password" placeholder="*******"/>
+                        <br/>
+                        <input onInput={this.atualizarSenha} type="password" placeholder="*******" className="input_login"/>
                     </label>
                     <input type="submit" value="Entrar"/>
                 </form>

@@ -1,7 +1,6 @@
 import React,{Component} from 'react';
 import logo from "../../assets/img/icon-logo.png";
 import Nav from "../../components/Nav/Nav";
-
 import "../../assets/css/App.css";
 
 
@@ -34,8 +33,17 @@ class App extends Component {
     })
     .catch(error => console.log(error))
 
-
+    
   }
+
+  formatarData = (element) =>{
+    let data = element.dataLancamento.split("T")[0];
+    let ano = data.split("-")[0];
+    let mes = data.split("-")[1];
+    let dia = data.split("-")[2];
+
+    return( dia + "/" + mes + "/" + ano);
+}
   
   render(){
     return (
@@ -69,15 +77,6 @@ class App extends Component {
               <h3>Lançamentos</h3>
 
               {this.state.lancamentos.slice(0,3).map(element =>{
-
-                let data = element.dataLancamento.split("T")[0];
-                let ano = data.split("-")[0];
-                let mes = data.split("-")[1];
-                let dia = data.split("-")[2];
-
-                element.dataLancamento = dia + "/" + mes + "/" + ano;
-                
-
                   return(
                     <div className="box_lancamento">
                     <div className="textos_e_capa">
@@ -100,7 +99,7 @@ class App extends Component {
                     </div>
 
                     <div className="data_e_btn">
-                      <p className="data_lancamento">{element.dataLancamento}</p>
+                      <p className="data_lancamento">{this.formatarData(element)}</p>
                     <button className="btn_favoritar">
                       <img src={estrelinha} className="estrelinha_btn_favoritar"/>
                       <p className="texto_btn_favoritar">Adicionar aos favoritos</p>

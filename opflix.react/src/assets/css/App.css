@@ -72,7 +72,7 @@ h1{
   display: flex;
   justify-content: space-between;
   align-items:center;
-  width: 50%;
+  width: 35%;
   font-size: 1.1em;
 }
 
@@ -106,9 +106,9 @@ h1{
   /* background-color: #A60313 ; */
 }
 
-#sair_nav:hover{
+/* #sair_nav:hover{
   border: 2px solid #F2EB12; 
-}
+} */
 
 .logo_box{
   display : flex;

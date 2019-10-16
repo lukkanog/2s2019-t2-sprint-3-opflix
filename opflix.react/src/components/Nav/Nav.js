@@ -1,13 +1,15 @@
 import React,{Component} from "react";
 import logo from "../../assets/img/icon-logo.png";
 import {Link} from "react-router-dom";
+import jsonwebtoken from "jsonwebtoken";
 
 
 export default class Nav extends Component{
     constructor(){
         super();
         this.state = {
-            usuarioEstaLogado : false
+            usuarioEstaLogado : false,
+            permissao : "",
         }
     }
 
@@ -15,6 +17,10 @@ export default class Nav extends Component{
         let user = localStorage.getItem("usuario-opflix");
         if (user != null){
             this.setState({usuarioEstaLogado : true})
+        }else{
+            var jwt = require("jsonwebtoken");
+            var token = localStorage.getItem("usuario-opflix");
+            let decoded = jwt.decode(token);
         }
     }
 
@@ -36,8 +42,8 @@ export default class Nav extends Component{
                         </div>
                     </Link>
                     <ul id="lista_nav">
-                        <li className="option_nav"> <Link to="/lancamentos">Lançamentos chegando</Link> </li>
-                        <li className="option_nav"> <a>Lançados recentemente</a> </li>
+                        <li className="option_nav"> <Link to="/lancamentos">Todos os lançamentos</Link> </li>
+                        <li className="option_nav"> <Link to ="/">Procurar</Link> </li>
                         {this.state.usuarioEstaLogado == false?
                             <li className="option_nav"> <Link to="/login" id="login_nav">Login</Link> </li>
                         :

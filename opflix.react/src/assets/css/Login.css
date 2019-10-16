@@ -1,3 +1,20 @@
 .Login main{
     padding-top: 5.5em;
+    min-height: calc(100vh - 5.5em);
+}
+
+h2{
+    padding: 2em 0;
+}
+
+#form_login{
+    width: 40%;
+    margin:auto;
+    display: flex;
+    flex-flow:column;
+}
+
+.input_login{
+    width:100%;
+
 }

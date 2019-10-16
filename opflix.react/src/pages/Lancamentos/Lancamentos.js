@@ -41,6 +41,15 @@ export default class Lancamentos extends Component{
         this.setState({quantExibida : this.state.quantExibida + 3})
     }
 
+    formatarData = (element) =>{
+        let data = element.dataLancamento.split("T")[0];
+        let ano = data.split("-")[0];
+        let mes = data.split("-")[1];
+        let dia = data.split("-")[2];
+
+        return( dia + "/" + mes + "/" + ano);
+    }
+
     render()
     {
         return(
@@ -53,12 +62,6 @@ export default class Lancamentos extends Component{
                     <h2>Todos os lançamentos</h2>
 
                     {this.state.lancamentos.slice(0,this.state.quantExibida).map(element =>{
-                        let data = element.dataLancamento.split("T")[0];
-                        let ano = data.split("-")[0];
-                        let mes = data.split("-")[1];
-                        let dia = data.split("-")[2];
-        
-                        element.dataLancamento = dia + "/" + mes + "/" + ano;
                         return(
                             <div className="box_lancamento">
                             <div className="textos_e_capa">
@@ -81,7 +84,7 @@ export default class Lancamentos extends Component{
                             </div>
         
                             <div className="data_e_btn">
-                              <p className="data_lancamento">{element.dataLancamento}</p>
+                              <p className="data_lancamento">{this.formatarData(element)}</p>
                             <button className="btn_favoritar">
                               <img src={estrelinha} className="estrelinha_btn_favoritar"/>
                               <p className="texto_btn_favoritar">Adicionar aos favoritos</p>
