@@ -1,8 +1,8 @@
 import React,{Component} from "react";
 import logo from "../../assets/img/icon-logo.png";
 import {Link} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import jsonwebtoken from "jsonwebtoken";
-
 
 export default class Nav extends Component{
     constructor(){
@@ -15,12 +15,13 @@ export default class Nav extends Component{
 
     componentDidMount(){
         let user = localStorage.getItem("usuario-opflix");
+
         if (user != null){
-            this.setState({usuarioEstaLogado : true})
-        }else{
-            var jwt = require("jsonwebtoken");
             var token = localStorage.getItem("usuario-opflix");
-            let decoded = jwt.decode(token);
+            let usuario = jsonwebtoken.decode(token);
+
+            this.setState({usuarioEstaLogado : true})
+            this.setState({permissao : usuario.permissao}); 
         }
     }
 
@@ -28,7 +29,8 @@ export default class Nav extends Component{
     efetuarLogout = (event) =>{
         event.preventDefault();
         localStorage.removeItem("usuario-opflix");
-        this.setState({usuarioEstaLogado : false})
+        this.setState({usuarioEstaLogado : false});
+        this.setState({ permissao : ""});
     }
     
     render(){
@@ -41,6 +43,14 @@ export default class Nav extends Component{
                             <h1>OpFlix</h1>
                         </div>
                     </Link>
+                    {this.state.permissao === "ADMINISTRADOR" ? 
+                        <ul id="lista_nav">
+                            <li className="option_nav"> <Link to="/adm/lancamentos/cadastrar">Cadastrar lançamento</Link> </li>
+                            <li className="option_nav"> <Link to="/adm/lancamentos">Lançamentos</Link> </li>
+                            <li className="option_nav"> <Link to="/adm/categorias">Categorias</Link> </li>
+                            <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
+                        </ul>
+                        :    
                     <ul id="lista_nav">
                         <li className="option_nav"> <Link to="/lancamentos">Todos os lançamentos</Link> </li>
                         <li className="option_nav"> <Link to ="/">Procurar</Link> </li>
@@ -50,6 +60,7 @@ export default class Nav extends Component{
                             <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
                         }
                     </ul>
+                    }
                 </div>
             </nav>
         )

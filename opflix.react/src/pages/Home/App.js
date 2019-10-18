@@ -4,7 +4,7 @@ import Nav from "../../components/Nav/Nav";
 import "../../assets/css/App.css";
 
 
-
+import jsonwebtoken from "jsonwebtoken";
 import {Link} from "react-router-dom";
 import Axios from 'axios';
 import jureg from "../../assets/img/jureg-teste.png";
@@ -78,7 +78,7 @@ class App extends Component {
 
               {this.state.lancamentos.slice(0,3).map(element =>{
                   return(
-                    <div className="box_lancamento">
+                    <div  key={element.idLancamento} className="box_lancamento">
                     <div className="textos_e_capa">
                       <div>
                         <h4 className="titulo_lancamento">{element.titulo}</h4>

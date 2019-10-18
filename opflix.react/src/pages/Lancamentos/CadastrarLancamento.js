@@ -2,7 +2,7 @@ import React,{Component} from "react";
 import Nav from "../../components/Nav/Nav";
 import "../../assets/css/CadastrarLancamento.css";
 import Axios from "axios";
-import DatePicker from "react-datepicker";
+import {Redirect,Route} from "react-router-dom"
 
 class CadastrarLancamento extends Component{
     constructor(){
@@ -18,11 +18,8 @@ class CadastrarLancamento extends Component{
             titulo : "",
             duracao : 0,
             sinopse : "",
-            
-            // dia : "",
-            // mes : "",
-            // ano : "",
             dataLancamento : "",
+            jaFoiCadastrado : false,
         }
     }
     
@@ -118,13 +115,21 @@ class CadastrarLancamento extends Component{
             Authorization: "Bearer " + token
         }})
         .then(response => console.log(response.status))
+        .then(this.setState({jaFoiCadastrado : true}))
         .catch(error => console.log(error))
+
     }
 
 
     render(){
-        return(
-            <div className="CadastrarLancamento">
+        if (this.state.jaFoiCadastrado === true){
+            return(
+                <Redirect to={{pathname:"/adm/lancamentos"}}/>
+            )
+        }else
+        {
+            return(
+                <div className="CadastrarLancamento">
                 <header>
                     <Nav/>
                 </header>
@@ -153,8 +158,8 @@ class CadastrarLancamento extends Component{
                                     {this.state.tipos.map(element =>{
                                         return(
                                             <option value={element.idTipoLancamento} key={element.idTipoLancamento}>{element.nome}</option>
-                                        )
-                                    })}
+                                            )
+                                        })}
                                 </select>
                             </label>
 
@@ -179,8 +184,8 @@ class CadastrarLancamento extends Component{
                                     {this.state.plataformas.map(element =>{
                                         return(
                                             <option key={element.idPlataforma} value={element.idPlataforma}>{element.nome}</option>
-                                        )
-                                    })}
+                                            )
+                                        })}
                                 </select>
                             </label>
 
@@ -203,6 +208,7 @@ class CadastrarLancamento extends Component{
                 </main>
             </div>
             )
+        }
     }
 }
-export default CadastrarLancamento;
+    export default CadastrarLancamento;

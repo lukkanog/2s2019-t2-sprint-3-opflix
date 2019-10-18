@@ -12,5 +12,33 @@
     text-align: center;
 }
 
+.LancamentosAdm h2{
+    text-align:center;
+    padding: 2em 0;
+}
 
+.LancamentosAdm table{
+    width: 90%;
+    margin : auto;
+}
+
+.LancamentosAdm table thead{
+    background-color: #A60313;
+    color: #fff;
+}
+
+.LancamentosAdm table td,th{
+    padding: 0.25em 0.75em;
+}
+
+#btn_link_cadastrarLancamento{
+    background-color: #A60313;
+    padding: 0.5em;
+    margin : auto;
+    font-size: 1.1em;
+}
+
+.icone_tabela{
+    height: 2em;
+}
 
