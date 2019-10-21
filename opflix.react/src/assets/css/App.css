@@ -63,8 +63,7 @@ h1{
 .flexbox_nav{
   display: flex;
   justify-content: space-between;
-  height:5.5em;
-  
+  height:5.5em; 
 }
 
 #lista_nav{
@@ -72,7 +71,8 @@ h1{
   display: flex;
   justify-content: space-between;
   align-items:center;
-  width: 45%;
+  text-align: center;
+  /* width: 10%; */
   font-size: 1.1em;
 }
 
@@ -80,6 +80,11 @@ h1{
   transition:0.8s ;
   -webkit-transition: 0.8s ;
   cursor: pointer;
+  padding: 0 1em;
+}
+
+textarea:focus, input:focus, select:focus{  
+  outline: #A60313 solid 1px;
 }
 
 .option_nav a:hover{
@@ -103,6 +108,7 @@ h1{
   /* border: 2px solid #fff; */
   transition: 0.6s ;
   -webkit-transition: 0.6s;
+  font-weight: bolder;
   /* background-color: #A60313 ; */
 }
 

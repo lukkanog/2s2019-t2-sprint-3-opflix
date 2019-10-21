@@ -14,7 +14,7 @@ import Categorias from './pages/Categorias/Categorias';
 import LancamentosComum from "./pages/Lancamentos/LancamentosComum";
 import LancamentosAdm from "./pages/Lancamentos/LancamentosAdm";
 import CadastrarLancamento from "./pages/Lancamentos/CadastrarLancamento";
-import EditarLancamento from "./components/EditarLancamento/EditarLancamento";
+import EditarLancamento from "./pages/Lancamentos/EditarLancamento";
 
 
 

@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import {Redirect} from "react-router-dom";
-import Nav from "../Nav/Nav";
+import Nav from "../../components/Nav/Nav";
+
+import "../../assets/css/CadastrarLancamento.css";
 
 export default class EditarLancamento extends Component {
     constructor() {
         super();
         this.state = {
-            lancamento: null,
+            lancamento: {},
+            // idLancamento : "",
 
             categorias : [],
             plataformas : [],
@@ -20,6 +23,60 @@ export default class EditarLancamento extends Component {
             sinopse : "",
             dataLancamento : "",
         }
+    }
+
+    componentDidMount() {
+        console.log(this.props.location.state);
+        let token = localStorage.getItem("usuario-opflix");
+        let idPassado = this.props.location.state.idLancamento;
+
+        fetch("http://localhost:5000/api/lancamentos/" + idPassado,{
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        })
+        .then(response =>response.json())
+        .then(data => {
+            this.setState({
+                lancamento : data,
+                sinopse : data.sinopse,
+                dataLancamento : data.dataLancamento,
+                duracao : data.duracao,
+                
+        })})
+        .catch(error => console.log(error))
+
+        let urlCategorias = "http://localhost:5000/api/categorias";
+        let urlTipos = "http://localhost:5000/api/tiposlancamento";
+        let urlPlataformas = "http://localhost:5000/api/plataformas";
+
+        fetch(urlTipos,{
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(response => response.json())
+        .then(data => this.setState({tipos : data}))
+        .catch(error => console.log(error))
+
+        fetch(urlCategorias,{
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(response => response.json())
+        .then(data => this.setState({categorias : data}))
+        .catch(error => console.log(error))
+
+        fetch(urlPlataformas,{
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+        .then(response => response.json())
+        .then(data => this.setState({plataformas : data}))
+        .catch(error => console.log(error))
     }
 
     atualizarEstadoTitulo = (event)=>{
@@ -58,23 +115,30 @@ export default class EditarLancamento extends Component {
         this.setState({sinopse : event.target.value})
     }
 
-    componentDidMount() {
-        if (this.props.lancamento === null){
-            return(
-                <Redirect to={{pathname:"/adm/lancamentos"}}/>
-            )
-        }
-
-
+    editarLancamento = (event) =>{
+        event.preventDefault();
+        console.log(this.state)
         let token = localStorage.getItem("usuario-opflix");
+        let idPassado = this.props.location.state.idLancamento;
 
-        fetch("http://localhost:5000/api/lancamentos/" + this.props.idLancamento, {
-            authorization: "Bearer " + token,
+        fetch("http://localhost:5000/api/lancamentos/" + idPassado,{
+            method: "PUT",
+            headers:{
+                Authorization : "Bearer " + token
+            },
+            body: {
+                idCategoria : this.state.idCategoria,
+                idPlataforma : this.state.idPlataforma,
+                idTipoLancamento : this.state.idTipoLancamento,
+                titulo : this.state.titulo,
+                sinopse : this.state.sinopse,
+                dataLancamento : this.state.dataLancamento,
+                duracao : this.state.duracao,
+            }
         })
-            .then(response => response.json())
-            .then(lancamentoAchado => this.setState({ lancamento: lancamentoAchado }))
-            .catch(error => console.log(error))
+        .catch(error => console.log(error))
     }
+
 
     render() {
         return (
@@ -84,19 +148,19 @@ export default class EditarLancamento extends Component {
                 </header>
                 <main className="container">
                     <div className="content">
-                        <h2>Editar</h2>
-                        <form id="form_lancamento" onSubmit={this.cadastrarLancamento}>
+                        <h2>Editar - {this.state.lancamento.titulo}</h2>
+                        <form id="form_lancamento" onSubmit={this.editarLancamento}>
 
                             <label className="grupo_input">
                                 Título
                                 <br />
-                                <input onInput={this.atualizarEstadoTitulo} value={this.props.lancamento.titulo} className="" type="text" minLength="1" maxLength="100" required className="input_lancamento" />
+                                <input defaultValue={this.state.lancamento.titulo} onInput={this.atualizarEstadoTitulo}  className="" type="text" minLength="1" maxLength="100" required className="input_lancamento" />
                             </label>
 
                             <label className="grupo_input">
                                 Data de lançamento
                                 <br />
-                                <input type="date" onChange={this.atualizarEstadoData} required className="input_lancamento" />
+                                <input type="date"  onChange={this.atualizarEstadoData} required className="input_lancamento" />
                             </label>
 
                             <label className="grupo_input">
@@ -116,7 +180,7 @@ export default class EditarLancamento extends Component {
                                 Gênero
                                 <br />
                                 <select onChange={this.atualizarEstadoCategoria} required className="input_lancamento select_lancamento">
-                                    <option disabled selected>Selecione</option>
+                                    <option defaultChecked disabled>Selecione</option>
                                     {this.state.categorias.map(element => {
                                         return (
                                             <option key={element.idCategoria} value={element.idCategoria}>{element.nome}</option>
@@ -128,7 +192,7 @@ export default class EditarLancamento extends Component {
                             <label className="grupo_input">
                                 Plataforma
                                 <br />
-                                <select onChange={this.atualizarEstadoPlataforma} required className="input_lancamento select_lancamento">
+                                <select onChange={this.atualizarEstadoPlataforma}  required className="input_lancamento select_lancamento">
                                     <option disabled selected>Selecione</option>
                                     {this.state.plataformas.map(element => {
                                         return (
@@ -141,16 +205,16 @@ export default class EditarLancamento extends Component {
                             <label className="grupo_input">
                                 Duração (em minutos)
                                 <br />
-                                <input onChange={this.atualizarEstadoDuracao} value={this.props.lancamento.duracao} type="number" min="1" max="1000" required className="input_lancamento" />
+                                <input onChange={this.atualizarEstadoDuracao} defaultValue={this.state.lancamento.duracao} type="number" min="1" max="1000" required className="input_lancamento" />
                             </label>
 
                             <label className="grupo_input">
                                 Sinopse
                                 <br />
-                                <textarea onInput={this.atualizarEstadoSinopse} value={this.props.lancamento.sinopse} minLength="10" maxLength="800" id="textArea_sinopse" required className="input_lancamento" placeholder="Escreva aqui a sinopse" />
+                                <textarea onInput={this.atualizarEstadoSinopse} defaultValue={this.state.lancamento.sinopse} minLength="10" maxLength="800" id="textArea_sinopse" required className="input_lancamento" placeholder="Escreva aqui a sinopse" />
                             </label>
 
-                            <input type="submit" value="Cadastrar lançamento" id="btn_submit_lancamento" />
+                            <input type="submit" value="Salvar alterações" id="btn_submit_lancamento" />
 
                         </form>
                     </div>

@@ -20,6 +20,8 @@
 .LancamentosAdm table{
     width: 90%;
     margin : auto;
+    box-shadow: 1px 2px 5px #00000041 ;
+
 }
 
 .LancamentosAdm table thead{
@@ -29,16 +31,35 @@
 
 .LancamentosAdm table td,th{
     padding: 0.25em 0.75em;
+    text-align: center;
+}
+
+.LancamentosAdm table tr{
+    border:1px solid #000;
 }
 
 #btn_link_cadastrarLancamento{
+    /* width: 200%; */
     background-color: #A60313;
     padding: 0.5em;
-    margin : auto;
+    position: relative;
+    left: 55vh;
+    /* right: 50vh; */
+    top: 2em;
     font-size: 1.1em;
 }
 
 .icone_tabela{
     height: 2em;
+    transition: 0.2s;
+    -webkit-transition: 0.2s;
+}
+
+.icone_tabela:hover{
+    /* height: 2.1em; */
+    cursor: pointer;
+    filter:  contrast(0%);
+    -webkit-filter:  contrast(0%);
+    /* display: none; */
 }
 
