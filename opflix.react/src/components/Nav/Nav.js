@@ -63,6 +63,7 @@ export default class Nav extends Component {
                             <li className="option_nav"> <Link to="/adm/lancamentos/cadastrar">Cadastrar lançamento</Link> </li>
                             <li className="option_nav"> <Link to="/adm/lancamentos">Lançamentos</Link> </li>
                             <li className="option_nav"> <Link to="/adm/categorias">Categorias</Link> </li>
+                            <li className="option_nav"> <Link to="/adm/plataformas">Plataformas</Link> </li>
                             <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
                         </ul>
                         :
@@ -73,7 +74,7 @@ export default class Nav extends Component {
                             :
                             <ul id="lista_nav">
                                 <li className="option_nav"> <Link to="/lancamentos">Todos os lançamentos</Link> </li>
-                                <li className="option_nav"> <Link to="/">Meus Favoritos</Link> </li>
+                                <li className="option_nav"> <Link to="/lancamentos/favoritos">Meus Favoritos</Link> </li>
                                 <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
                             </ul>
                     }

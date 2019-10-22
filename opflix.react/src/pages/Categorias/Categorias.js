@@ -71,9 +71,9 @@ export default class Categorias extends Component {
                 <main className="container">
                     <div className="content">
                         <h2>Categorias</h2>
-                        <table id="tabela_categorias">
+                        <table className="tabela">
                             <thead>
-                                <tr id="linha_cabecalho_tabela">
+                                <tr className="linha_cabecalho_tabela">
                                     <th>ID</th>
                                     <th>Categoria</th>
                                 </tr>
