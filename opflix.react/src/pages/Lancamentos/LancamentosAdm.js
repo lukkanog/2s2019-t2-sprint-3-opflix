@@ -1,6 +1,6 @@
 import React,{Component} from "react";
 import Nav from "../../components/Nav/Nav";
-import Axios from "axios";
+import Rodape from "../../components/Rodape/Rodape";
 import {Link,Redirect} from "react-router-dom";
 import iconeEditar from "../../assets/img/editar-icon.png";
 import iconeExcluir from "../../assets/img/excluir-icon.png";
@@ -124,6 +124,7 @@ export default class LancamentosAdm extends Component{
                             </Link>
                     </div>
                 </main>
+                <Rodape />
             </div>
         )
     }

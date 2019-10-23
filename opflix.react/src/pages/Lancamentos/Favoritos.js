@@ -1,9 +1,8 @@
 import React,{Component} from "react";
 import Nav from "../../components/Nav/Nav";
-import jsonwebtoken from "jsonwebtoken";
 import estrelinha from "../../assets/img/estrela.png";
 import jureg from "../../assets/img/jureg-teste.png"
-import Axios from "axios";
+import Rodape from "../../components/Rodape/Rodape";
 
 
 export default class Favoritos extends Component{
@@ -117,7 +116,7 @@ export default class Favoritos extends Component{
                                 <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                               </div>
                               <div>
-                                <img src={jureg} className="capa_lancamento" alt="capa do lançamento"/>   
+                                <img src={jureg} className="capa_lancamento" alt={"capa de " +element.titulo} title={"capa de " + element.titulo}/>   
                               </div>
                             </div>
         
@@ -134,6 +133,7 @@ export default class Favoritos extends Component{
                     })}
                 </div>
             </main>
+            <Rodape />
            </div> 
         )
     }

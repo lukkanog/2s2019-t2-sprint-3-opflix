@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Nav from "../../components/Nav/Nav";
+import Rodape from "../../components/Rodape/Rodape";
 
 import "../../assets/css/Categorias.css"
-import Axios from "axios";
 
 export default class Categorias extends Component {
     constructor() {
@@ -90,15 +90,17 @@ export default class Categorias extends Component {
                             </tbody>
                         </table>
                             <h3>Cadastrar nova categoria</h3>
-                            <form onSubmit={this.cadastrarCategoria}>
+                            <form onSubmit={this.cadastrarCategoria} className="form_categoria-plataforma">
                                 <label>
                                     Nome da categoria
+                                    <br/>
                                     <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
                                 </label>
                                 <input type="submit" value="Cadastrar categoria"/>
                             </form>
                     </div>
                 </main>
+                <Rodape />
             </div>
 
         )//return

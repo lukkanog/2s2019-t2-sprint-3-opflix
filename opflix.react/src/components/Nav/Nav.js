@@ -54,21 +54,22 @@ export default class Nav extends Component {
                 <div className="content flexbox_nav">
                     <Link to="/" id="link_home">
                         <div className="logo_box">
-                            <img src={logo} alt="Logo do OpFlix" title="Logo do OpFlix" />
+                            <img src={logo} alt="Logo do OpFlix"/>
                             <h1>OpFlix</h1>
                         </div>
                     </Link>
                     {this.state.permissao === "ADMINISTRADOR" ?
                         <ul id="lista_nav">
-                            <li className="option_nav"> <Link to="/adm/lancamentos/cadastrar">Cadastrar lançamento</Link> </li>
                             <li className="option_nav"> <Link to="/adm/lancamentos">Lançamentos</Link> </li>
                             <li className="option_nav"> <Link to="/adm/categorias">Categorias</Link> </li>
                             <li className="option_nav"> <Link to="/adm/plataformas">Plataformas</Link> </li>
+                            <li className="option_nav" id="link_todashboard"> <Link to="/adm/">Dashboard</Link> </li>
                             <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
                         </ul>
                         :
                         this.state.usuarioEstaLogado == false ?
                             <ul id="lista_nav">
+                                <li className="option_nav"> <Link to="/cadastro" >Cadastre-se</Link> </li>
                                 <li className="option_nav"> <Link to="/login" id="login_nav">Login</Link> </li>
                             </ul>
                             :

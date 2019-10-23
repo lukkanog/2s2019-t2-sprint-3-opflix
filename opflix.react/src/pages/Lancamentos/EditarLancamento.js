@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Nav from "../../components/Nav/Nav";
+import Rodape from "../../components/Rodape/Rodape";
+
 
 import "../../assets/css/CadastrarLancamento.css";
 
@@ -233,6 +235,7 @@ export default class EditarLancamento extends Component {
                             </form>
                         </div>
                     </main>
+                    <Rodape />
                 </div>
             )
         }

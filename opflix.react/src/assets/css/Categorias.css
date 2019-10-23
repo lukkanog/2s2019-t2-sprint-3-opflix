@@ -16,12 +16,18 @@
     width: 80%;
     margin: 1em auto;
     box-shadow: #00000080 1px 1px 20px;
-    /* box-shadow: #00000080 -1px -1px 7px; */
+    text-align: center;
 }
+
 
 .tabela thead{
     background-color: #A60313;
     color: #fff;
+}
+
+.tabela td{
+    padding:0.5em;
+    padding-left: 1em;
 }
 
 .linha_cabecalho_tabela{
@@ -32,5 +38,17 @@
     text-align: center;
     padding: 2em 0;
 }
+
+.form_categoria-plataforma{
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+}
+
+.form_categoria-plataforma input{
+    width:100%;
+}
+
+
 
 

@@ -1,22 +1,19 @@
 import React, { Component } from 'react';
 import logo from "../../assets/img/icon-logo.png";
 import Nav from "../../components/Nav/Nav";
-import "../../assets/css/App.css";
-
-
-import jsonwebtoken from "jsonwebtoken";
-import { Link } from "react-router-dom";
 import Axios from 'axios';
 import jureg from "../../assets/img/jureg-teste.png";
-import estrelinha from "../../assets/img/estrela.png"
-import Moment from 'react-moment';
+import estrelinha from "../../assets/img/estrela.png";
+import Rodape from "../../components/Rodape/Rodape";
+import "../../assets/css/App.css";
+import { Redirect,Link } from "react-router-dom"
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       lancamentos: [],
-      favoritos : [],
+      favoritos: [],
     }
   }
 
@@ -24,35 +21,35 @@ class App extends Component {
     let url = "http://localhost:5000/api/lancamentos";
 
     Axios.get(url)
-    .then(response => {
-      if (response.status === 200) {
-        this.setState({ lancamentos: response.data });
-        console.log(this.state)
-      } else {
-        console.log("ipa deu ruim" + response.status)
-      }
-    })
-    .catch(error => console.log(error))
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ lancamentos: response.data });
+          console.log(this.state)
+        } else {
+          console.log("ipa deu ruim" + response.status)
+        }
+      })
+      .catch(error => console.log(error))
 
-    
+
     let urlFavoritos = "http://localhost:5000/api/favoritos";
     let token = localStorage.getItem("usuario-opflix")
 
-    if (token != null){
+    if (token != null) {
       Axios.get(urlFavoritos, {
         headers: {
           "Authorization": "Bearer " + token
         }
       })
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({ favoritos: response.data });
-          console.log(this.state)
-        } else {
-          console.log("ipa deu ruim nos favorito" + response.status)
-        }
-      })
-      .catch(error => console.log(error))
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({ favoritos: response.data });
+            console.log(this.state)
+          } else {
+            console.log("ipa deu ruim nos favorito" + response.status)
+          }
+        })
+        .catch(error => console.log(error))
     }
 
   }
@@ -82,8 +79,8 @@ class App extends Component {
         idLancamento: id
       })
     })
-    .then(window.location.reload())
-    .catch(error => console.log(error))
+      .then(window.location.reload())
+      .catch(error => console.log(error))
   }
 
   desfavoritar = (id) => {
@@ -95,8 +92,8 @@ class App extends Component {
         "Authorization": "Bearer " + token,
       }
     })
-    .then(window.location.reload())
-    .catch(error => console.log(error))
+      .then(window.location.reload())
+      .catch(error => console.log(error))
   }
 
 
@@ -115,21 +112,19 @@ class App extends Component {
 
         <header className="container">
           <Nav />
-
         </header>
-
 
         {/* Banner */}
         <section className="container banner">
           <div className="content">
             <div className="logo_box">
-              <img src={logo} alt="Logo do OpFlix" />
+              <img src={logo} alt="Logo do OpFlix" alt="Logo do OpFlix"/>
               <h2>OpFlix</h2>
             </div>
 
             <div id="textgroup_banner">
               <p id="texto_banner">Os principais lançamentos do mundo cinematográfico na sua mão!</p>
-              <a id="link_banner">Comece agora</a>
+              <Link  to="/login" id="link_banner">Comece agora</Link>
             </div>
 
           </div>
@@ -138,7 +133,7 @@ class App extends Component {
         <main>
           <section className="conteudo_lancamentos container">
             <div className="content" id="conteudo">
-              <h3>Lançamentos</h3>
+              <h3>Alguns lançamentos</h3>
 
               {this.state.lancamentos.slice(0, 3).map(element => {
                 return (
@@ -158,15 +153,13 @@ class App extends Component {
                         <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                       </div>
                       <div>
-                        <img src={jureg} className="capa_lancamento" alt="capa do lançamento" />
+                        <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"Capa de " + element.titulo} />
                       </div>
                     </div>
 
                     <div className="data_e_btn">
                       <p className="data_lancamento">{this.formatarData(element)}</p>
 
-
-                        
                       {this.foiFavoritado(element.idLancamento) !== true ?
                         <button className="btn_favoritar" id={"favoritar_" + element.idLancamento} onClick={() => this.favoritar(element.idLancamento)}>
                           <img src={estrelinha} className="estrelinha_btn_favoritar" />
@@ -175,20 +168,20 @@ class App extends Component {
                         :
                         <button className="btn_desfavoritar" onClick={() => this.desfavoritar(element.idLancamento)}>
                           <img src={estrelinha} className="estrelinha_btn_favoritar" />
-                          <p className="texto_btn_favoritar">Desfavoritar</p>
+                          <p className="texto_btn_favoritar">Favorito</p>
                         </button>
                       }
-
 
                     </div>
                   </div>
                 )
               })}
+              <Link to="/lancamentos" className="link">Ver todos os lançamentos</Link>
             </div>
           </section>
 
         </main>
-
+        <Rodape />
       </div>
     );
   }

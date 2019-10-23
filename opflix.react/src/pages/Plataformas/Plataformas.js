@@ -1,5 +1,6 @@
 import React,{Component} from "react";
 import Nav from "../../components/Nav/Nav";
+import Rodape from "../../components/Rodape/Rodape";
 
 import "../../assets/css/Categorias.css"
 
@@ -81,15 +82,17 @@ export default class Plataformas extends Component{
                             </tbody>
                         </table>
                             <h3>Cadastrar nova plataforma</h3>
-                            <form onSubmit={this.cadastrarPlataforma}>
+                            <form onSubmit={this.cadastrarPlataforma} className="form_categoria-plataforma">
                                 <label>
                                     Nome da plataforma
+                                    <br/>
                                     <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
                                 </label>
-                                <input type="submit" value="Cadastrar categoria"/>
+                                <input type="submit" value="Cadastrar plataforma"/>
                             </form>
                     </div>
                 </main>
+                <Rodape/>
             </div>
         )
     }

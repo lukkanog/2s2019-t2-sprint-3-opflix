@@ -2,7 +2,9 @@ import React,{Component} from "react";
 import Nav from "../../components/Nav/Nav";
 import "../../assets/css/CadastrarLancamento.css";
 import Axios from "axios";
-import {Redirect,Route} from "react-router-dom"
+import {Redirect,} from "react-router-dom";
+import Rodape from "../../components/Rodape/Rodape";
+
 
 class CadastrarLancamento extends Component{
     constructor(){
@@ -206,6 +208,7 @@ class CadastrarLancamento extends Component{
                         </form>
                     </div>
                 </main>
+                <Rodape />
             </div>
             )
         }

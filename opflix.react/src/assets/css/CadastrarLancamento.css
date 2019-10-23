@@ -5,6 +5,7 @@
 
 main{
     padding-top: 5.5em;
+    min-height: 90vh;
 }
 
 .CadastrarLancamento h2,.EditarLancamento h2{

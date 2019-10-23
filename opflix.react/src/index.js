@@ -5,7 +5,6 @@ import App from './pages/Home/App';
 import * as serviceWorker from './serviceWorker';
 import jsonwebtoken from "jsonwebtoken";
 
-// import { parseJwt } from "../../services/auth"
 
 import {Route, Link, BrowserRouter as Router, Switch, Redirect} from "react-router-dom";
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado';
@@ -17,6 +16,9 @@ import LancamentosAdm from "./pages/Lancamentos/LancamentosAdm";
 import CadastrarLancamento from "./pages/Lancamentos/CadastrarLancamento";
 import EditarLancamento from "./pages/Lancamentos/EditarLancamento";
 import Favoritos from "./pages/Lancamentos/Favoritos";
+import CadastroComum from './pages/Cadastro/CadastroComum';
+import CadastroAdm from './pages/Cadastro/CadastroAdm';
+import Dashboard from './pages/Dashboard/Dashboard';
 
 
 
@@ -57,13 +59,16 @@ const routing = (
             <Switch>
                 <Route exact path="/" component={App}/>
                 <Route path="/login" component={Login}/>
+                <Route path="/cadastro" component={CadastroComum}/>
                 <RotaPrivada path="/lancamentos/favoritos" component={Favoritos}/>
                 <RotaPrivada path="/lancamentos" component={LancamentosComum}/>
                 <RotaPrivadaAdm path="/adm/categorias" component={Categorias}/>
                 <RotaPrivadaAdm path="/adm/plataformas" component={Plataformas}/>
+                <RotaPrivadaAdm path="/adm/cadastro" component={CadastroAdm}/>
                 <RotaPrivadaAdm path="/adm/lancamentos/cadastrar" component={CadastrarLancamento}/>
                 <RotaPrivadaAdm path="/adm/lancamentos/editar" component={EditarLancamento}/>
                 <RotaPrivadaAdm path="/adm/lancamentos" component={LancamentosAdm}/>
+                <RotaPrivadaAdm exact path="/adm/" component={Dashboard}/>
 
                     {/* DEIXA ESSE POR ULTIMO */}
                 <Route component={NaoEncontrado}/>

@@ -332,3 +332,44 @@ textarea:focus, input:focus, select:focus{
 .texto_btn_favoritar{
   font-size:1.4em;
 }
+
+footer{
+  background-color: #A60313;
+  color: #fff; 
+  padding: 2em 0;
+  margin-top: 1em;
+}
+
+footer .content{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+}
+
+#location_icon{
+  height: 5em;
+}
+
+.link{
+  /* padding: 1em;
+  text-decoration: none;
+  color: #F2EB12;
+  background-color: #A60313; */
+
+  background-color: #A60313;
+  color: #FFFB7A;
+  padding: 0.5em;
+  font-size: 1.1em;
+  font-weight: bold;
+  box-shadow: 1px 1px 3px #000;
+  border: none
+}
+.link:hover{
+  filter: contrast(200%);
+}
+
+#link_todashboard{
+  font-weight: bolder;
+  font-size: 1.2em
+}

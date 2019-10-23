@@ -6,8 +6,8 @@ import jureg from "../../assets/img/jureg-teste.png"
 
 import "../../assets/css/Lancamentos.css";
 
-
 import Nav from "../../components/Nav/Nav";
+import Rodape from "../../components/Rodape/Rodape";
 
 export default class Lancamentos extends Component {
     constructor() {
@@ -159,7 +159,7 @@ export default class Lancamentos extends Component {
                                             <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                                         </div>
                                         <div>
-                                            <img src={jureg} className="capa_lancamento" alt="capa do lançamento" />
+                                            <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"capa de " + element.titulo} />
                                         </div>
                                     </div>
 
@@ -174,7 +174,7 @@ export default class Lancamentos extends Component {
                                             :
                                             <button className="btn_desfavoritar" onClick={() => this.desfavoritar(element.idLancamento)}>
                                                 <img src={estrelinha} className="estrelinha_btn_favoritar" />
-                                                <p className="texto_btn_favoritar">Desfavoritar</p>
+                                                <p className="texto_btn_favoritar">Favorito</p>
                                             </button>
                                         }
                                     </div>
@@ -182,12 +182,13 @@ export default class Lancamentos extends Component {
                             )//return foreach
                         })}
                         {this.state.quantExibida < this.state.lancamentos.length ?
-                            <button onClick={this.exibirMaisTres} id="btn_ver_mais">Ver mais</button>
+                            <button onClick={this.exibirMaisTres} id="btn_ver_mais" className="link">Mostrar     mais</button>
                             :
                             <span/>
                         }
                     </div>
                 </main>
+                <Rodape />
             </div>
         )//return
     }//render
