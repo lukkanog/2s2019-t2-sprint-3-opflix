@@ -96,7 +96,7 @@ export default class Categorias extends Component {
                                     <br/>
                                     <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
                                 </label>
-                                <input type="submit" value="Cadastrar categoria"/>
+                                <input type="submit" value="Cadastrar categoria" className="link"/>
                             </form>
                     </div>
                 </main>

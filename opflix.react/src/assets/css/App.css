@@ -77,8 +77,8 @@ h1{
 }
 
 .option_nav a{
-  transition:0.8s ;
-  -webkit-transition: 0.8s ;
+  transition:0.4s ;
+  -webkit-transition: 0.4s ;
   cursor: pointer;
   padding: 0 1em;
 }
@@ -94,27 +94,27 @@ textarea:focus, input:focus, select:focus{
 #login_nav  {
   padding: 0.6em 1em;
   border: 2px solid #fff;
-  transition: 0.6s ease-in-out;
-  -webkit-transition: 0.6s ease-in-out;
+  transition: 0.4s ease-in-out;
+  -webkit-transition: 0.4s ease-in-out;
 }
 
 #login_nav:hover{
  border: 2px solid #F2EB12; 
+
 }
 
 #sair_nav{
   color: #F2EB12;
   padding: 0.6em 1em;
-  /* border: 2px solid #fff; */
   transition: 0.6s ;
   -webkit-transition: 0.6s;
   font-weight: bolder;
-  /* background-color: #A60313 ; */
 }
 
-/* #sair_nav:hover{
-  border: 2px solid #F2EB12; 
-} */
+#sair_nav:hover{
+  /* color: #fff; */
+  font-size: 1.1em;
+}
 
 .logo_box{
   display : flex;

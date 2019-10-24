@@ -18,6 +18,11 @@ export default class LancamentosAdm extends Component{
         this.atualizarPagina();
     }
 
+    componentDidUpdate(){
+        this.atualizarPagina();
+    }
+    
+
 
     atualizarPagina = () =>{
         let url = "http://localhost:5000/api/lancamentos";

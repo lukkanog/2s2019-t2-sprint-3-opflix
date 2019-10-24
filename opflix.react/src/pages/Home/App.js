@@ -6,7 +6,7 @@ import jureg from "../../assets/img/jureg-teste.png";
 import estrelinha from "../../assets/img/estrela.png";
 import Rodape from "../../components/Rodape/Rodape";
 import "../../assets/css/App.css";
-import { Redirect,Link } from "react-router-dom"
+import { Redirect, Link } from "react-router-dom"
 
 class App extends Component {
   constructor() {
@@ -14,6 +14,7 @@ class App extends Component {
     this.state = {
       lancamentos: [],
       favoritos: [],
+      redirectToLogin: false,
     }
   }
 
@@ -68,32 +69,42 @@ class App extends Component {
   favoritar = (id) => {
     console.log(id);
     let token = localStorage.getItem("usuario-opflix");
+    if (token === null) {
+      this.setState({ redirectToLogin: true })
+    } else {
 
-    fetch("http://localhost:5000/api/favoritos", {
-      method: "POST",
-      headers: {
-        "Authorization": "Bearer " + token,
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({
-        idLancamento: id
+
+      fetch("http://localhost:5000/api/favoritos", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + token,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          idLancamento: id
+        })
       })
-    })
-      .then(window.location.reload())
-      .catch(error => console.log(error))
+        .then(window.location.reload())
+        .catch(error => console.log(error))
+    }
   }
 
   desfavoritar = (id) => {
     let token = localStorage.getItem("usuario-opflix");
+    if (token === null) {
+      this.setState({ redirectToLogin: true })
+    } else {
 
-    fetch("http://localhost:5000/api/favoritos/" + id, {
-      method: "DELETE",
-      headers: {
-        "Authorization": "Bearer " + token,
-      }
-    })
-      .then(window.location.reload())
-      .catch(error => console.log(error))
+
+      fetch("http://localhost:5000/api/favoritos/" + id, {
+        method: "DELETE",
+        headers: {
+          "Authorization": "Bearer " + token,
+        }
+      })
+        .then(window.location.reload())
+        .catch(error => console.log(error))
+    }
   }
 
 
@@ -107,6 +118,11 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.redirectToLogin === true){
+      return(
+        <Redirect to="/login"/>
+      )
+    }
     return (
       <div className="App">
 
@@ -118,13 +134,13 @@ class App extends Component {
         <section className="container banner">
           <div className="content">
             <div className="logo_box">
-              <img src={logo} alt="Logo do OpFlix" alt="Logo do OpFlix"/>
+              <img src={logo} alt="Logo do OpFlix" alt="Logo do OpFlix" />
               <h2>OpFlix</h2>
             </div>
 
             <div id="textgroup_banner">
               <p id="texto_banner">Os principais lançamentos do mundo cinematográfico na sua mão!</p>
-              <Link  to="/login" id="link_banner">Comece agora</Link>
+              <Link to="/login" id="link_banner">Comece agora</Link>
             </div>
 
           </div>

@@ -88,7 +88,7 @@ export default class Plataformas extends Component{
                                     <br/>
                                     <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
                                 </label>
-                                <input type="submit" value="Cadastrar plataforma"/>
+                                <input type="submit" value="Cadastrar plataforma" className="link"/>
                             </form>
                     </div>
                 </main>
