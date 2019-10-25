@@ -29,60 +29,65 @@ export default class EditarLancamento extends Component {
 
     componentDidMount() {
         let token = localStorage.getItem("usuario-opflix");
-        let idPassado = this.props.location.state.idLancamento;
+        try {
+            let idPassado = this.props.location.state.idLancamento;
 
-        fetch("http://localhost:5000/api/lancamentos/" + idPassado, {
-            method: "GET",
-            headers: {
-                Authorization: "Bearer " + token
-            }
-        })
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    // lancamento : data,
-                    sinopse: data.sinopse,
-                    dataLancamento: data.dataLancamento,
-                    duracao: data.duracao,
-                    idCategoria: data.idCategoria,
-                    idPlataforma: data.idPlataforma,
-                    idTipoLancamento: data.idTipoLancamento,
-                    titulo: data.titulo,
-                })
+
+            fetch("http://localhost:5000/api/lancamentos/" + idPassado, {
+                method: "GET",
+                headers: {
+                    Authorization: "Bearer " + token
+                }
             })
-            .then(console.log(this.state))
-            .catch(error => console.log(error))
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        // lancamento : data,
+                        sinopse: data.sinopse,
+                        dataLancamento: data.dataLancamento,
+                        duracao: data.duracao,
+                        idCategoria: data.idCategoria,
+                        idPlataforma: data.idPlataforma,
+                        idTipoLancamento: data.idTipoLancamento,
+                        titulo: data.titulo,
+                    })
+                })
+                .then(console.log(this.state))
+                .catch(error => console.log(error))
 
-        let urlCategorias = "http://localhost:5000/api/categorias";
-        let urlTipos = "http://localhost:5000/api/tiposlancamento";
-        let urlPlataformas = "http://localhost:5000/api/plataformas";
+            let urlCategorias = "http://localhost:5000/api/categorias";
+            let urlTipos = "http://localhost:5000/api/tiposlancamento";
+            let urlPlataformas = "http://localhost:5000/api/plataformas";
 
-        fetch(urlTipos, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-            .then(response => response.json())
-            .then(data => this.setState({ tipos: data }))
-            .catch(error => console.log(error))
+            fetch(urlTipos, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+                .then(response => response.json())
+                .then(data => this.setState({ tipos: data }))
+                .catch(error => console.log(error))
 
-        fetch(urlCategorias, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-            .then(response => response.json())
-            .then(data => this.setState({ categorias: data }))
-            .catch(error => console.log(error))
+            fetch(urlCategorias, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+                .then(response => response.json())
+                .then(data => this.setState({ categorias: data }))
+                .catch(error => console.log(error))
 
-        fetch(urlPlataformas, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-            .then(response => response.json())
-            .then(data => this.setState({ plataformas: data }))
-            .catch(error => console.log(error))
+            fetch(urlPlataformas, {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+                .then(response => response.json())
+                .then(data => this.setState({ plataformas: data }))
+                .catch(error => console.log(error))
+        } catch (error) {
+            this.setState({redirecionar : true})
+        }
     }
 
     atualizarEstadoTitulo = (event) => {
@@ -153,7 +158,7 @@ export default class EditarLancamento extends Component {
     render() {
         if (this.state.redirecionar === true) {
             return (
-                <Redirect to="/" />
+                <Redirect to="/adm/lancamentos" />
             )
         } else {
 

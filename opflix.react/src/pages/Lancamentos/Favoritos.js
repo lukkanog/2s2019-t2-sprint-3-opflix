@@ -49,22 +49,6 @@ export default class Favoritos extends Component{
         return bool;
     }
 
-    // favoritar = (id) => {
-    //     console.log(id);
-    //     let token = localStorage.getItem("usuario-opflix");
-
-    //     fetch("http://localhost:5000/api/favoritos", {
-    //         method: "POST",
-    //         headers: {
-    //             "Authorization": "Bearer " + token,
-    //             "Content-type": "application/json",
-    //         },
-    //         body: JSON.stringify({
-    //             idLancamento: id
-    //         })
-    //     })
-    //         .catch(error => console.log(error))
-    // }
 
     desfavoritar = (id) =>{
         let token = localStorage.getItem("usuario-opflix");

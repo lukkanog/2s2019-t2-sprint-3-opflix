@@ -29,7 +29,7 @@ const RotaPrivada = ({component : Component}) =>(
             <Component {...props}/> 
         ) : (
                 <Redirect 
-                to={{pathname : "/login", state: {from : props.location}}}
+                to={{pathname : "/login", state: {foiRedirecionado : true}}}
                 />
             )
         }
@@ -44,10 +44,10 @@ const RotaPrivadaAdm = ({component : Component}) =>(
             jsonwebtoken.decode(localStorage.getItem("usuario-opflix")).permissao === "ADMINISTRADOR" ? (
                 <Component {...props}/>
             ) : (
-                <Redirect to={{pathname : "/erro", state: {from : props.location}}}/>
+                <Redirect to={{pathname : "/", state: {from : props.location}}}/>
             )
         ) : (
-            <Redirect to={{pathname : "/login", state: {from : props.location}}}/>
+            <Redirect to={{pathname : "/", state: {from : props.location}}}/>
         )
     }
     />

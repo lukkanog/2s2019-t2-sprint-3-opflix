@@ -179,7 +179,7 @@ textarea:focus, input:focus, select:focus{
 }
 
 #texto_banner{
-  font-size: 3em;
+  font-size: 2.4em;
   font-family: "Gayathri Thin",sans-serif
 }
 
@@ -188,6 +188,14 @@ textarea:focus, input:focus, select:focus{
   font-weight: bold;
   font-size:3em;
   text-shadow: #fff 1px 1px 1.3em;
+
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+}
+
+#link_banner:hover{
+  /* filter: contrast(30%); */
+  color : #F2EB12;
 }
 
 /***** CONTEUDO PRINCIPAL *********/
@@ -224,7 +232,7 @@ textarea:focus, input:focus, select:focus{
   padding:1em;
 
   
-  transition:0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
   -webkit-transition: 0.2s ease-in-out;
 }
 
@@ -306,9 +314,9 @@ textarea:focus, input:focus, select:focus{
   border-radius: 3em 3.2em 3.2em 3em;
 
   position: relative;
-  /* top: 1.5em;
-  /* left: calc((100% - 85%)); */
-  /* left: 1.7em; */
+  top: 1.5em;
+   left: calc((100% - 85%));
+   left: 1.7em;
   top: 2.5em;
   left: 3em;
   z-index: 1;
@@ -316,6 +324,10 @@ textarea:focus, input:focus, select:focus{
 
 .btn_favoritar:hover, .btn_desfavoritar:hover{
   box-shadow: 1px 1px 10px #A60313;
+}
+
+.btn_favoritar:ac, .btn_desfavoritar:active{
+  border:none;
 }
 
 
@@ -372,4 +384,11 @@ footer .content{
 #link_todashboard{
   font-weight: bolder;
   font-size: 1.2em
+}
+
+.texto_alerta{
+  text-align: center;
+  color: green;
+  font-size: 1.5em;
+  padding: 1em 0;
 }

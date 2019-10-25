@@ -17,19 +17,21 @@ export default class Lancamentos extends Component {
             quantExibida: 5,
 
             favoritos: [],
-            // filtroPlataforma : "",
-            // filtroData : "",
+            plataformas: [],
+
+            filtroPlataforma: "",
+            filtroNome: "",
+            filtroData: "",
         }
     }
 
-    atualizarPagina = () =>{
+    atualizarPagina = () => {
         const url = "http://localhost:5000/api/lancamentos";
 
         Axios.get(url)
             .then(response => {
                 if (response.status === 200) {
                     this.setState({ lancamentos: response.data });
-                    console.log(this.state)
                 } else {
                     console.log("ipa deu ruim" + response.status)
                 }
@@ -38,13 +40,12 @@ export default class Lancamentos extends Component {
     }
 
 
+
     componentDidMount() {
         this.atualizarPagina();
-        
-        
+
         const urlFavoritos = "http://localhost:5000/api/favoritos";
         let token = localStorage.getItem("usuario-opflix");
-
 
         Axios.get(urlFavoritos, {
             headers: {
@@ -54,13 +55,50 @@ export default class Lancamentos extends Component {
             .then(response => {
                 if (response.status === 200) {
                     this.setState({ favoritos: response.data });
-                    console.log(this.state)
                 } else {
-                    console.log("ipa deu ruim nos favorito" + response.status)
+                    console.log("deu ruim nos favorito" + response.status)
+                }
+            })
+            .catch(error => console.log(error))
+
+
+
+        let urlPlataformas = "http://localhost:5000/api/plataformas";
+        Axios.get(urlPlataformas, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    this.setState({ plataformas: response.data });
+                } else {
+                    console.log("deu ruim nos plataforma" + response.status)
                 }
             })
             .catch(error => console.log(error))
     }
+
+    // componentDidUpdate() {
+    //     let urlFavoritos = "http://localhost:5000/api/favoritos";
+    //     let token = localStorage.getItem("usuario-opflix")
+
+    //     if (token != null) {
+    //         Axios.get(urlFavoritos, {
+    //             headers: {
+    //                 "Authorization": "Bearer " + token
+    //             }
+    //         })
+    //             .then(response => {
+    //                 if (response.status === 200) {
+    //                     this.setState({ favoritos: response.data });
+    //                 } else {
+    //                     console.log("ipa deu ruim nos favorito" + response.status)
+    //                 }
+    //             })
+    //             .catch(error => console.log(error))
+    //     }
+    // }
 
 
     exibirMaisTres = (event) => {
@@ -80,7 +118,6 @@ export default class Lancamentos extends Component {
     }
 
     favoritar = (id) => {
-        console.log(id);
         let token = localStorage.getItem("usuario-opflix");
 
         fetch("http://localhost:5000/api/favoritos", {
@@ -93,33 +130,24 @@ export default class Lancamentos extends Component {
                 idLancamento: id
             })
         })
-        // .then(this.adicionarNaListaFavoritos(id))
-        // .then(this.atualizarPagina())
         .then(window.location.reload())
-        .catch(error => console.log(error))
+            .catch(error => console.log(error))
     }
 
-    adicionarNaListaFavoritos = (id) =>{
-        let lancamento = this.state.lancamentos.filter(element =>{
-            return element.idLancamento == id
-        })
-        let listaFavoritos = this.state.favoritos;
-        listaFavoritos.push(lancamento);
-        this.setState({favoritos : listaFavoritos})
-        console.log(this.state)
-    }
 
-    desfavoritar = (id) =>{
+
+    desfavoritar = (id) => {
         let token = localStorage.getItem("usuario-opflix");
 
-        fetch("http://localhost:5000/api/favoritos/" + id,{
-            method : "DELETE",
+        fetch("http://localhost:5000/api/favoritos/" + id, {
+            method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token,
             }
         })
         .then(window.location.reload())
-        .catch(error => console.log(error))
+
+            .catch(error => console.log(error))
     }
 
     formatarData = (element) => {
@@ -130,6 +158,7 @@ export default class Lancamentos extends Component {
 
         return (dia + "/" + mes + "/" + ano);
     }
+
 
     render() {
         return (
@@ -168,7 +197,7 @@ export default class Lancamentos extends Component {
 
                                         {this.foiFavoritado(element.idLancamento) !== true ?
                                             <button className="btn_favoritar" id={"favoritar_" + element.idLancamento} onClick={() => this.favoritar(element.idLancamento)}>
-                                                <img src={estrelinha} className="estrelinha_btn_favoritar" />
+                                                <img src={estrelinha} className="estrelinha_btn_favoritar" alt="" />
                                                 <p className="texto_btn_favoritar">Adicionar aos favoritos</p>
                                             </button>
                                             :
@@ -184,7 +213,7 @@ export default class Lancamentos extends Component {
                         {this.state.quantExibida < this.state.lancamentos.length ?
                             <button onClick={this.exibirMaisTres} id="btn_ver_mais" className="link">Mostrar     mais</button>
                             :
-                            <span/>
+                            <span />
                         }
                     </div>
                 </main>

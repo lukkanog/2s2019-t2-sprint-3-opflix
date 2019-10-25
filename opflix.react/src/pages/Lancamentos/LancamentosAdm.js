@@ -62,7 +62,6 @@ export default class LancamentosAdm extends Component{
                 "Authorization": "Bearer " + token
             }
         })
-            // .then(this.atualizarPagina())
             .then(this.atualizarLista(id))
             .catch(error => console.log(error));
 

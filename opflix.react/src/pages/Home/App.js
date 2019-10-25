@@ -18,14 +18,13 @@ class App extends Component {
     }
   }
 
-  componentDidMount() {
+  atualizarPagina() {
     let url = "http://localhost:5000/api/lancamentos";
 
     Axios.get(url)
       .then(response => {
         if (response.status === 200) {
           this.setState({ lancamentos: response.data });
-          console.log(this.state)
         } else {
           console.log("ipa deu ruim" + response.status)
         }
@@ -45,14 +44,37 @@ class App extends Component {
         .then(response => {
           if (response.status === 200) {
             this.setState({ favoritos: response.data });
-            console.log(this.state)
           } else {
             console.log("ipa deu ruim nos favorito" + response.status)
           }
         })
         .catch(error => console.log(error))
     }
+  }
 
+  componentDidMount() {
+    this.atualizarPagina();
+  }
+
+  componentDidUpdate() {
+    let urlFavoritos = "http://localhost:5000/api/favoritos";
+    let token = localStorage.getItem("usuario-opflix")
+
+    if (token != null) {
+      Axios.get(urlFavoritos, {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      })
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({ favoritos: response.data });
+          } else {
+            console.log("ipa deu ruim nos favorito" + response.status)
+          }
+        })
+        .catch(error => console.log(error))
+    }
   }
 
   foiFavoritado = (id) => {
@@ -67,7 +89,6 @@ class App extends Component {
   }
 
   favoritar = (id) => {
-    console.log(id);
     let token = localStorage.getItem("usuario-opflix");
     if (token === null) {
       this.setState({ redirectToLogin: true })
@@ -118,9 +139,9 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.redirectToLogin === true){
-      return(
-        <Redirect to="/login"/>
+    if (this.state.redirectToLogin === true) {
+      return (
+        <Redirect to={{ pathname: "/login", state: { foiRedirecionado: true } }} />
       )
     }
     return (
@@ -140,7 +161,7 @@ class App extends Component {
 
             <div id="textgroup_banner">
               <p id="texto_banner">Os principais lançamentos do mundo cinematográfico na sua mão!</p>
-              <Link to="/login" id="link_banner">Comece agora</Link>
+              <Link to="/cadastro" id="link_banner">Comece agora</Link>
             </div>
 
           </div>
@@ -178,12 +199,12 @@ class App extends Component {
 
                       {this.foiFavoritado(element.idLancamento) !== true ?
                         <button className="btn_favoritar" id={"favoritar_" + element.idLancamento} onClick={() => this.favoritar(element.idLancamento)}>
-                          <img src={estrelinha} className="estrelinha_btn_favoritar" />
+                          <img src={estrelinha} className="estrelinha_btn_favoritar" alt="" />
                           <p className="texto_btn_favoritar">Adicionar aos favoritos</p>
                         </button>
                         :
                         <button className="btn_desfavoritar" onClick={() => this.desfavoritar(element.idLancamento)}>
-                          <img src={estrelinha} className="estrelinha_btn_favoritar" />
+                          <img src={estrelinha} className="estrelinha_btn_favoritar" alt="" />
                           <p className="texto_btn_favoritar">Favorito</p>
                         </button>
                       }

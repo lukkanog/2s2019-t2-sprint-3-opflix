@@ -13,10 +13,11 @@
 }
 
 .tabela{
-    width: 80%;
+    width: 60%;
     margin: 1em auto;
     box-shadow: #00000080 1px 1px 20px;
     text-align: center;
+    background-color: #e7dfe0;
 }
 
 
@@ -28,7 +29,9 @@
 .tabela td{
     padding:0.5em;
     padding-left: 1em;
+    background-color: #fff;
 }
+
 
 .linha_cabecalho_tabela{
     height:1.6em;

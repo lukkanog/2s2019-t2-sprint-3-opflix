@@ -58,6 +58,7 @@ export default class Categorias extends Component {
             }
         })
         .then(this.atualizarLista())
+        // .then(window.location.reload())
         .catch(error => console.log(error))
     }
 

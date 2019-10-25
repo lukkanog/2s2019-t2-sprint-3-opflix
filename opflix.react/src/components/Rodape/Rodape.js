@@ -1,4 +1,4 @@
-import React,{Component} from "react";
+import React from "react";
 import locationIcon from "../../assets/img/location-icon.png"
 
 export default function Rodape(){

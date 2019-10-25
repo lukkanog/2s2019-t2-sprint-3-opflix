@@ -15,7 +15,21 @@ export default class Login extends Component {
         this.state = {
             email: "",
             senha: "",
+            foiRedirecionado : false,
         }
+        console.log(this.state)
+    }
+
+    componentWillMount(){
+        try {
+            if (this.props.location.state.foiRedirecionado === true){
+                this.setState({foiRedirecionado : true});
+            }
+
+        } catch (error) {
+            this.setState({foiRedirecionado : false});
+        }
+
     }
 
     atualizarEmail = (event) => {
@@ -61,6 +75,11 @@ export default class Login extends Component {
                 </header>
                 <main className="container">
                     <div className="content">
+                        {this.state.foiRedirecionado === true ? 
+                            <p className="texto_alerta">Você precisa estar logado para essa ação!</p>
+                        :
+                        <span/>
+                        }
                         <h2>Entrar</h2>
                         <form onSubmit={this.efetuarLogin} id="form_login">
                             <label>
