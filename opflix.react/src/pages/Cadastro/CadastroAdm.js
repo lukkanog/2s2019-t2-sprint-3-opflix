@@ -24,7 +24,7 @@ export default class CadastroAdm extends Component{
     componentDidMount(){
         let token = localStorage.getItem("usuario-opflix");
 
-        fetch("http://localhost:5000/api/tiposusuario",{
+        fetch("http://192.168.4.16:5000/api/tiposusuario",{
             headers:{
                 "Authorization" : "Bearer " + token,
             }
@@ -77,7 +77,7 @@ export default class CadastroAdm extends Component{
         }else{
             let token = localStorage.getItem("usuario-opflix")
             
-            fetch("http://localhost:5000/api/usuarios/cadastraradmin",{
+            fetch("http://192.168.4.16:5000/api/usuarios/cadastraradmin",{
                 method : "POST",
                 headers:{
                     "Authorization" : "Bearer " + token,
@@ -88,7 +88,7 @@ export default class CadastroAdm extends Component{
                     email : this.state.email,
                     senha : this.state.senha,
                     dataNascimento : this.state.dataNascimento,
-                    idTipousuario : Number(this.state.idTipousuario),
+                    idTipoUsuario : this.state.idTipousuario,
                 })
             })
             .then(response => console.log(response.status))

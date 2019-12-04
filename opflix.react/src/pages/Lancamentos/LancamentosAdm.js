@@ -18,14 +18,8 @@ export default class LancamentosAdm extends Component{
         this.atualizarPagina();
     }
 
-    componentDidUpdate(){
-        this.atualizarPagina();
-    }
-    
-
-
     atualizarPagina = () =>{
-        let url = "http://localhost:5000/api/lancamentos";
+        let url = "http://192.168.4.16:5000/api/lancamentos";
         console.log("teste");
         fetch(url)
         .then(response =>response.json())
@@ -56,7 +50,7 @@ export default class LancamentosAdm extends Component{
 
         let token = localStorage.getItem("usuario-opflix")
 
-        fetch("http://localhost:5000/api/lancamentos/" + id, {
+        fetch("http://192.168.4.16:5000/api/lancamentos/" + id, {
             method: "DELETE",
             headers: {
                 "Authorization": "Bearer " + token

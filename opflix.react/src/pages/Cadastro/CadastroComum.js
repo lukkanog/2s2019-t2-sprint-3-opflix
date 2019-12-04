@@ -56,7 +56,7 @@ export default class CadastroComum extends Component{
             })
         }else{
 
-            fetch("http://localhost:5000/api/usuarios",{
+            fetch("http://192.168.4.16:5000/api/usuarios",{
                 method : "POST",
                 headers:{
                     "Content-type" : "application/json"

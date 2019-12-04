@@ -20,7 +20,7 @@ export default class Plataformas extends Component{
     atualizarEstadoPlataformas(){
         let token = localStorage.getItem("usuario-opflix");
 
-        fetch("http://localhost:5000/api/plataformas",{
+        fetch("http://192.168.4.16:5000/api/plataformas",{
             method: "GET",
             headers:{
                 "Authorization" : "Bearer " + token,
@@ -40,7 +40,7 @@ export default class Plataformas extends Component{
         event.preventDefault();
         let token = localStorage.getItem("usuario-opflix");
 
-       fetch("http://localhost:5000/api/plataformas",{
+       fetch("http://192.168.4.16:5000/api/plataformas",{
             method : "POST",
             body : JSON.stringify({
                 nome : this.state.nome

@@ -18,7 +18,7 @@ export default class Categorias extends Component {
     }
 
     atualizarLista(){
-        const url = "http://localhost:5000/api/categorias";
+        const url = "http://192.168.4.16:5000/api/categorias";
         const token = localStorage.getItem("usuario-opflix");
 
         fetch(url, {
@@ -43,7 +43,7 @@ export default class Categorias extends Component {
     cadastrarCategoria = (event) =>{
         event.preventDefault();
 
-        const url = "http://localhost:5000/api/categorias";
+        const url = "http://192.168.4.16:5000/api/categorias";
         const token = localStorage.getItem("usuario-opflix");
 
         fetch(url,

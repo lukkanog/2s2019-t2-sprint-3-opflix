@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   atualizarPagina() {
-    let url = "http://localhost:5000/api/lancamentos";
+    let url = "http://192.168.4.16:5000/api/lancamentos";
 
     Axios.get(url)
       .then(response => {
@@ -32,7 +32,7 @@ class App extends Component {
       .catch(error => console.log(error))
 
 
-    let urlFavoritos = "http://localhost:5000/api/favoritos";
+    let urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
     let token = localStorage.getItem("usuario-opflix")
 
     if (token != null) {
@@ -57,7 +57,7 @@ class App extends Component {
   }
 
   componentDidUpdate() {
-    let urlFavoritos = "http://localhost:5000/api/favoritos";
+    let urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
     let token = localStorage.getItem("usuario-opflix")
 
     if (token != null) {
@@ -95,7 +95,7 @@ class App extends Component {
     } else {
 
 
-      fetch("http://localhost:5000/api/favoritos", {
+      fetch("http://192.168.4.16:5000/api/favoritos", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + token,
@@ -105,8 +105,8 @@ class App extends Component {
           idLancamento: id
         })
       })
-        .then(window.location.reload())
-        .catch(error => console.log(error))
+        .then(() => this.adicionarAoEstadoFavoritos(id))
+        .catch (error => console.log(error))
     }
   }
 
@@ -117,13 +117,13 @@ class App extends Component {
     } else {
 
 
-      fetch("http://localhost:5000/api/favoritos/" + id, {
+      fetch("http://192.168.4.16:5000/api/favoritos/" + id, {
         method: "DELETE",
         headers: {
           "Authorization": "Bearer " + token,
         }
       })
-        .then(window.location.reload())
+        .then(() => this.removerDoEstadoFavoritos(id))
         .catch(error => console.log(error))
     }
   }
@@ -136,6 +136,30 @@ class App extends Component {
     let dia = data.split("-")[2];
 
     return (dia + "/" + mes + "/" + ano);
+  }
+
+  adicionarAoEstadoFavoritos = (id) => {
+    var lancamento = this._buscarLancamentoPorId(id);
+
+    this.setState((prevState, props) => ({
+      favoritos: this.state.favoritos.concat(lancamento)
+    }));
+  }
+
+  removerDoEstadoFavoritos = (id) => {
+    let lista = this.state.favoritos;
+    lista = lista.filter(element => {
+      return element.idLancamento !== id;
+    })
+    this.setState({ favoritos: lista })
+  }
+
+
+  buscarLancamentoPorId = (idLancamento) => {
+    let lancamento = this.state.lancamentos.find(element => {
+      return element.idLancamento == idLancamento;
+    });
+    return lancamento;
   }
 
   render() {

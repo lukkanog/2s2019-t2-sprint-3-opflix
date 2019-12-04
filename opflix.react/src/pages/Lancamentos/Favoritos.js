@@ -16,7 +16,7 @@ export default class Favoritos extends Component{
     componentDidMount(){
         let token = localStorage.getItem("usuario-opflix");
 
-        fetch("http://localhost:5000/api/favoritos",{
+        fetch("http://192.168.4.16:5000/api/favoritos",{
             headers : {
                 "Authorization" : "Bearer " + token,
             }
@@ -53,7 +53,7 @@ export default class Favoritos extends Component{
     desfavoritar = (id) =>{
         let token = localStorage.getItem("usuario-opflix");
 
-        fetch("http://localhost:5000/api/favoritos/" + id,{
+        fetch("http://192.168.4.16:5000/api/favoritos/" + id,{
             method : "DELETE",
             headers: {
                 "Authorization": "Bearer " + token,

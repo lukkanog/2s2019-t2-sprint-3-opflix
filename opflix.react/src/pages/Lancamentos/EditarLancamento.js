@@ -33,7 +33,7 @@ export default class EditarLancamento extends Component {
             let idPassado = this.props.location.state.idLancamento;
 
 
-            fetch("http://localhost:5000/api/lancamentos/" + idPassado, {
+            fetch("http://192.168.4.16:5000/api/lancamentos/" + idPassado, {
                 method: "GET",
                 headers: {
                     Authorization: "Bearer " + token
@@ -55,9 +55,9 @@ export default class EditarLancamento extends Component {
                 .then(console.log(this.state))
                 .catch(error => console.log(error))
 
-            let urlCategorias = "http://localhost:5000/api/categorias";
-            let urlTipos = "http://localhost:5000/api/tiposlancamento";
-            let urlPlataformas = "http://localhost:5000/api/plataformas";
+            let urlCategorias = "http://192.168.4.16:5000/api/categorias";
+            let urlTipos = "http://192.168.4.16:5000/api/tiposlancamento";
+            let urlPlataformas = "http://192.168.4.16:5000/api/plataformas";
 
             fetch(urlTipos, {
                 headers: {
@@ -133,7 +133,7 @@ export default class EditarLancamento extends Component {
         let token = localStorage.getItem("usuario-opflix");
         let idPassado = this.props.location.state.idLancamento;
 
-        fetch("http://localhost:5000/api/lancamentos/" + idPassado, {
+        fetch("http://192.168.4.16:5000/api/lancamentos/" + idPassado, {
             method: "PUT",
             headers: {
                 Authorization: "Bearer " + token,
