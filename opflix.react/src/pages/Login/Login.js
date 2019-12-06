@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Nav from "../../components/Nav/Nav";
 import Rodape from "../../components/Rodape/Rodape";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import jsonwebtoken from "jsonwebtoken";
 
 import "../../assets/css/Login.css";
@@ -15,19 +15,20 @@ export default class Login extends Component {
         this.state = {
             email: "",
             senha: "",
-            foiRedirecionado : false,
+            incorreto: false,
+            foiRedirecionado: false,
         }
         console.log(this.state)
     }
 
-    componentWillMount(){
+    componentWillMount() {
         try {
-            if (this.props.location.state.foiRedirecionado === true){
-                this.setState({foiRedirecionado : true});
+            if (this.props.location.state.foiRedirecionado === true) {
+                this.setState({ foiRedirecionado: true });
             }
 
         } catch (error) {
-            this.setState({foiRedirecionado : false});
+            this.setState({ foiRedirecionado: false });
         }
 
     }
@@ -51,20 +52,21 @@ export default class Login extends Component {
             senha: this.state.senha,
         })
             .then(response => {
-                if (response.status === 200) {
+                if (response.status == 200) {
                     localStorage.setItem("usuario-opflix", response.data.token);
-                    
+
                     let token = localStorage.getItem("usuario-opflix");
-                    if (jsonwebtoken.decode(token).permissao == "ADMINISTRADOR"){
+                    if (jsonwebtoken.decode(token).permissao == "ADMINISTRADOR") {
                         this.props.history.push("/adm/")
-                    }else{
+                    } else {
                         this.props.history.push("/");
                     }
-                    console.log("deu bom")
                 }
             })
-            .catch(error => console.log(error))
-    }
+            .catch(error =>() =>{
+                 console.log(error);
+            })
+            }
 
 
     render() {
@@ -75,11 +77,12 @@ export default class Login extends Component {
                 </header>
                 <main className="container">
                     <div className="content">
-                        {this.state.foiRedirecionado === true ? 
+                        {this.state.foiRedirecionado === true ?
                             <p className="texto_alerta">Você precisa estar logado para essa ação!</p>
-                        :
-                        <span/>
+                            :
+                            <span />
                         }
+
                         <h2>Entrar</h2>
                         <form onSubmit={this.efetuarLogin} id="form_login">
                             <label>
@@ -93,11 +96,16 @@ export default class Login extends Component {
                                 <input onInput={this.atualizarSenha} type="password" placeholder="*******" className="input_login" />
                             </label>
                             <input type="submit" value="Entrar" id="submit_login" />
+                            {this.state.incorreto == true ?
+                                <p className="texto_alerta">Usuário ou senha incorretos</p>
+                                :
+                                <span />
+                            }
                             <p>Ainda não tem uma conta? <Link to="/cadastro" className="link_toblack">Cadastre-se</Link></p>
                         </form>
                     </div>
                 </main>
-                <Rodape/>
+                <Rodape />
             </div>
         )
     }

@@ -12,6 +12,7 @@ import Login from "./pages/Login/Login";
 import Categorias from './pages/Categorias/Categorias';
 import Plataformas from "./pages/Plataformas/Plataformas";
 import LancamentosComum from "./pages/Lancamentos/LancamentosComum";
+import Mapa from "./pages/Mapa/Mapa";
 import LancamentosAdm from "./pages/Lancamentos/LancamentosAdm";
 import CadastrarLancamento from "./pages/Lancamentos/CadastrarLancamento";
 import EditarLancamento from "./pages/Lancamentos/EditarLancamento";
@@ -61,6 +62,7 @@ const routing = (
                 <Route path="/login" component={Login}/>
                 <Route path="/cadastro" component={CadastroComum}/>
                 <RotaPrivada path="/lancamentos/favoritos" component={Favoritos}/>
+                <RotaPrivada path="/lancamentos/mapa" component={Mapa} />
                 <RotaPrivada path="/lancamentos" component={LancamentosComum}/>
                 <RotaPrivadaAdm path="/adm/categorias" component={Categorias}/>
                 <RotaPrivadaAdm path="/adm/plataformas" component={Plataformas}/>

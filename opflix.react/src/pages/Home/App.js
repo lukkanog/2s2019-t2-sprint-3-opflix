@@ -56,26 +56,26 @@ class App extends Component {
     this.atualizarPagina();
   }
 
-  componentDidUpdate() {
-    let urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
-    let token = localStorage.getItem("usuario-opflix")
+  // componentDidUpdate() {
+  //   let urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
+  //   let token = localStorage.getItem("usuario-opflix")
 
-    if (token != null) {
-      Axios.get(urlFavoritos, {
-        headers: {
-          "Authorization": "Bearer " + token
-        }
-      })
-        .then(response => {
-          if (response.status === 200) {
-            this.setState({ favoritos: response.data });
-          } else {
-            console.log("ipa deu ruim nos favorito" + response.status)
-          }
-        })
-        .catch(error => console.log(error))
-    }
-  }
+  //   if (token != null) {
+  //     Axios.get(urlFavoritos, {
+  //       headers: {
+  //         "Authorization": "Bearer " + token
+  //       }
+  //     })
+  //       .then(response => {
+  //         if (response.status === 200) {
+  //           this.setState({ favoritos: response.data });
+  //         } else {
+  //           console.log("ipa deu ruim nos favorito" + response.status)
+  //         }
+  //       })
+  //       .catch(error => console.log(error))
+  //   }
+  // }
 
   foiFavoritado = (id) => {
     let bool = false;
@@ -139,9 +139,9 @@ class App extends Component {
   }
 
   adicionarAoEstadoFavoritos = (id) => {
-    var lancamento = this._buscarLancamentoPorId(id);
+    var lancamento = this.buscarLancamentoPorId(id);
 
-    this.setState((prevState, props) => ({
+    this.setState(() => ({
       favoritos: this.state.favoritos.concat(lancamento)
     }));
   }

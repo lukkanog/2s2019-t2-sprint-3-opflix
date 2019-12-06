@@ -109,7 +109,7 @@ export default class Lancamentos extends Component {
     foiFavoritado = (id) => {
         let bool = false;
         this.state.favoritos.map(element => {
-            if (element.idLancamento == id) {
+            if (element.idLancamento === id) {
                 bool = true;
                 return bool;
             }
@@ -186,7 +186,7 @@ export default class Lancamentos extends Component {
     
       buscarLancamentoPorId = (idLancamento) => {
         let lancamento = this.state.lancamentos.find(element => {
-          return element.idLancamento == idLancamento;
+          return element.idLancamento === idLancamento;
         });
         return lancamento;
       }
@@ -210,7 +210,7 @@ export default class Lancamentos extends Component {
                                             <p className="caracteristicas_lancamento"><b>Tipo: </b>{element.idTipoLancamentoNavigation.nome}</p>
                                             <p className="caracteristicas_lancamento"><b>Gênero: </b>{element.idCategoriaNavigation.nome}</p>
                                             <p className="caracteristicas_lancamento"><b>Plataforma: </b>{element.idPlataformaNavigation.nome}</p>
-                                            {element.idTipoLancamentoNavigation.nome == "Serie" ?
+                                            {element.idTipoLancamentoNavigation.nome === "Serie" ?
                                                 <p className="caracteristicas_lancamento"><b>Duração: </b>{element.duracao + " minutos por episódio"}</p>
                                                 :
                                                 <p className="caracteristicas_lancamento"><b>Duração: </b>{element.duracao + " minutos"}</p>

@@ -76,6 +76,7 @@ export default class Nav extends Component {
                             <ul id="lista_nav">
                                 <li className="option_nav"> <Link to="/lancamentos">Todos os lançamentos</Link> </li>
                                 <li className="option_nav"> <Link to="/lancamentos/favoritos">Meus Favoritos</Link> </li>
+                                <li className="option_nav"> <Link to="/lancamentos/mapa">Mapa de lançamentos</Link> </li>
                                 <li className="option_nav" > <a onClick={this.efetuarLogout} id="sair_nav">Sair</a> </li>
                             </ul>
                     }

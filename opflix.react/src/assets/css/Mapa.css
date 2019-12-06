@@ -1,0 +1,21 @@
+*{
+    margin : 0;
+    padding : 0;
+    font-family: "Century Gothic"
+  }
+  
+
+#map {
+    height: 70%;
+}
+
+.pin_marker{
+    height : "10%";
+    background-color: "fff";
+}
+
+.pin-icon{
+    height : "30px";
+}
+
+
