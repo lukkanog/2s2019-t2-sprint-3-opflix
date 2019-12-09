@@ -157,7 +157,6 @@ export default class Lancamentos extends Component {
         }
       }
     
-    
       formatarData = (element) => {
         let data = element.dataLancamento.split("T")[0];
         let ano = data.split("-")[0];
@@ -168,7 +167,7 @@ export default class Lancamentos extends Component {
       }
     
       adicionarAoEstadoFavoritos = (id) => {
-        var lancamento = this._buscarLancamentoPorId(id);
+        var lancamento = this.buscarLancamentoPorId(id);
     
         this.setState((prevState, props) => ({
           favoritos: this.state.favoritos.concat(lancamento)
@@ -219,7 +218,7 @@ export default class Lancamentos extends Component {
                                             <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                                         </div>
                                         <div>
-                                            <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"capa de " + element.titulo} />
+                                            {/* <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"capa de " + element.titulo} /> */}
                                         </div>
                                     </div>
 

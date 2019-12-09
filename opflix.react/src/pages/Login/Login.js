@@ -52,11 +52,11 @@ export default class Login extends Component {
             senha: this.state.senha,
         })
             .then(response => {
-                if (response.status == 200) {
+                if (response.status===200) {
                     localStorage.setItem("usuario-opflix", response.data.token);
 
                     let token = localStorage.getItem("usuario-opflix");
-                    if (jsonwebtoken.decode(token).permissao == "ADMINISTRADOR") {
+                    if (jsonwebtoken.decode(token).permissao==="ADMINISTRADOR") {
                         this.props.history.push("/adm/")
                     } else {
                         this.props.history.push("/");
@@ -96,7 +96,7 @@ export default class Login extends Component {
                                 <input onInput={this.atualizarSenha} type="password" placeholder="*******" className="input_login" />
                             </label>
                             <input type="submit" value="Entrar" id="submit_login" />
-                            {this.state.incorreto == true ?
+                            {this.state.incorreto===true ?
                                 <p className="texto_alerta">Usuário ou senha incorretos</p>
                                 :
                                 <span />

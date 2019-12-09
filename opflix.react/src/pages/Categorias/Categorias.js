@@ -57,8 +57,7 @@ export default class Categorias extends Component {
                     "Authorization": "Bearer " + token
             }
         })
-        .then(this.atualizarLista())
-        // .then(window.location.reload())
+        .then(() => this.atualizarLista())
         .catch(error => console.log(error))
     }
 
@@ -90,12 +89,12 @@ export default class Categorias extends Component {
                                 })}
                             </tbody>
                         </table>
-                            <h3>Cadastrar nova categoria</h3>
+                            {/* <h3>Cadastrar nova categoria</h3> */}
                             <form onSubmit={this.cadastrarCategoria} className="form_categoria-plataforma">
                                 <label>
-                                    Nome da categoria
+                                    Cadastrar nova categoria
                                     <br/>
-                                    <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
+                                    <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1" placeholder="Insira o nome da categoria"/>
                                 </label>
                                 <input type="submit" value="Cadastrar categoria" className="link"/>
                             </form>

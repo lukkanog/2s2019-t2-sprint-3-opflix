@@ -17,6 +17,10 @@
     padding: 2em 0;
 }
 
+.LancamentosAdm main{
+    height : 100%
+}
+
 .LancamentosAdm table{
     width: 90%;
     margin : auto;

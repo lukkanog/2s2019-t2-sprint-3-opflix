@@ -50,7 +50,7 @@ export default class Plataformas extends Component{
                 "Content-type" : "application/json",
             }
         })
-        .then(this.atualizarEstadoPlataformas())
+        .then(() => this.atualizarEstadoPlataformas())
         .catch(error => console.log(error))
     }
 
@@ -81,13 +81,13 @@ export default class Plataformas extends Component{
                                 })}
                             </tbody>
                         </table>
-                            <h3>Cadastrar nova plataforma</h3>
+                            {/* <h3>Cadastrar nova plataforma</h3> */}
                             <form onSubmit={this.cadastrarPlataforma} className="form_categoria-plataforma">
                                 <label>
-                                    Nome da plataforma
+                                    Cadastrar nova plataforma
                                     <br/>
                                     
-                                    <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1"/>
+                                    <input type="text"  onInput={this.atualizarEstadoNome} maxLength="70" minLength="1" placeholder="Insira o nome da plataforma"/>
                                 </label>
                                 <input type="submit" value="Cadastrar plataforma" className="link"/>
                             </form>

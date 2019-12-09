@@ -267,9 +267,10 @@ textarea:focus, input:focus, select:focus{
 
 }
 .caracteristicas_lancamento{
-  max-width: 90%;
+  /* max-width: 90%; */
   text-align: justify;
   line-height: 1.5em;
+  font-size: 1.2em;
 }
 
 .sinopse{
@@ -350,6 +351,8 @@ footer{
   color: #fff; 
   padding: 2em 0;
   margin-top: 1em;
+  position: relative;
+  /* bottom: 10; */
 }
 
 footer .content{

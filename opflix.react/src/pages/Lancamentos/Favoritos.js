@@ -84,7 +84,7 @@ export default class Favoritos extends Component{
 
                     {this.state.lancamentos.map(element =>{
                         return(
-                            <div className="box_lancamento">
+                            <div className="box_lancamento" key={element.idLancamento}>
                             <div className="textos_e_capa">
                               <div>
                                 <h4 className="titulo_lancamento">{element.titulo}</h4>
@@ -100,7 +100,7 @@ export default class Favoritos extends Component{
                                 <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                               </div>
                               <div>
-                                <img src={jureg} className="capa_lancamento" alt={"capa de " +element.titulo} title={"capa de " + element.titulo}/>   
+                                {/* <img src={jureg} className="capa_lancamento" alt={"capa de " +element.titulo} title={"capa de " + element.titulo}/>    */}
                               </div>
                             </div>
         

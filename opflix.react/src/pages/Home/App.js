@@ -214,7 +214,7 @@ class App extends Component {
                         <p className="caracteristicas_lancamento sinopse" ><b>Sinopse: </b>{element.sinopse}</p>
                       </div>
                       <div>
-                        <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"Capa de " + element.titulo} />
+                        {/* <img src={jureg} className="capa_lancamento" alt={"capa de " + element.titulo} title={"Capa de " + element.titulo} /> */}
                       </div>
                     </div>
 

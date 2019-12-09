@@ -106,7 +106,8 @@ class CadastrarLancamento extends Component {
 
     atualizarEstadoLatitude = (event) => {
         event.preventDefault();
-        this.setState({ latitude: event.target.value })
+        this.setState({ latitude: event.target.value });
+        console.log(parseFloat(event.target.value));
     }
 
     atualizarEstadoLongitude = (event) => {
@@ -119,24 +120,38 @@ class CadastrarLancamento extends Component {
         console.log(this.state)
 
         let token = localStorage.getItem("usuario-opflix");
+        
+        console.log(this.state.latitude);
+        console.log(this.state.longitude);
 
-        if (this.state.latitude != null && this.state.longitude !== null){
-            Axios.post("http://192.168.4.16:5000/api/localizacoes", {
-                latitude : this.state.latitude,
-                longitude : this.state.longitude,
-                lancamento : {
-                    titulo : this.state.titulo,
-                    dataLancamento : this.state.dataLancamento
-                }
-            }, {
-                headers: {
-                    Authorization: "Bearer " + token
-                }
-            })
+        var parsedLat = parseFloat(this.state.latitude);
+        var parsedLng = parseFloat(this.state.longitude);
+
+        console.log(parsedLat);
+        console.log(parsedLng);
+
+                    
+            if (this.state.latitude != null && this.state.longitude !== null && !isNaN(parsedLat) && !isNaN(parsedLng)){
+                Axios.post("http://192.168.4.16:5000/api/localizacoes", {
+                    latitude : this.state.latitude,
+                    longitude : this.state.longitude,
+                    lancamento : {
+                        titulo : this.state.titulo,
+                        dataLancamento : this.state.dataLancamento
+                    }
+                }, {
+                    headers: {
+                        Authorization: "Bearer " + token
+                    }
+                })
                 .then(response => console.log(response.status))
                 .catch(error => console.log(error))
-        }
+            }else{
+                console.log("erro na localizacao")
+            }
+   
 
+            
 
         Axios.post("http://192.168.4.16:5000/api/lancamentos", {
             idCategoria: this.state.idCategoria,
@@ -248,10 +263,10 @@ class CadastrarLancamento extends Component {
                                                 Latitude
                                     <br />
                                                 <input
-                                                    type="number"
-                                                    min={-90} max={90}
+                                                    // type="number"
+                                                    // min={-90} max={90}
                                                     className="input_location"
-                                                    pattern="[0-9]+([,\.][0-9]+)?"
+                                                    // pattern="^(\+|-)?(?:90(?:(?:\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\.[0-9]{1,6})?))$"                                                    
                                                     onInput={this.atualizarEstadoLatitude}
                                                 />
                                             </label>
@@ -261,10 +276,10 @@ class CadastrarLancamento extends Component {
                                                 Longitude
                                     <br />
                                                 <input
-                                                    type="number"
-                                                    min={-90} max={90}
+                                                    // type="number"
+                                                    // min={-90} max={90}
                                                     className="input_location"
-                                                    pattern="[0-9]+([,\.][0-9]+)?"
+                                                    // pattern="^(\+|-)?(?:180(?:(?:\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\.[0-9]{1,6})?))$"
                                                     onInput={this.atualizarEstadoLongitude}
                                                 />
                                             </label>

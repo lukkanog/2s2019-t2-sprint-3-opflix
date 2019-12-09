@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import Rodape from "../../components/Rodape/Rodape";
 import Nav from "../../components/Nav/Nav";
-import { Map, InfoWindow, Marker, GoogleApiWrapper, } from 'google-maps-react';
 import GoogleMapReact from 'google-map-react';
 import PopcornIcon from "../../assets/img/popcorn-icon.png";
-// import Pin from "../../components/Pins/Pin";
+import PinIcon from "../../assets/img/pin-icon.png";
+import "../../assets/css/Mapa.css"
 
-
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
 const Pin = ({ lancamento }) =>
     <div className="pin-marker">
-        <img src={PopcornIcon} alt="" className="pin-icon" />
-        <p>{lancamento.titulo}</p>
+        <img src={PinIcon} alt="" className="pin-icon" />
+        <p className="titulo-marker">{lancamento.titulo}</p>
         {/* <p>{lancamento.dataLancamento}</p> */}
     </div>
 
@@ -96,62 +94,51 @@ export default class Mapa extends Component {
                     <h2> Confira os lançamentos de todo o mundo!</h2>
 
                     {/*  !!!! ESSE FUNCIONA  !!!  */}
-                    <div style={{ height: '80vh', width: '80vh' }}>
+                    <div className="border">
 
-                        {this.state.carregarMapa == false ? <span /> :
-                            <GoogleMapReact
-                                defaultCenter={{ lat: 25.7358492, lng: 42.1957196 }}
-                                defaultZoom={0}
-                                options={this.createMapOptions}
-                            >
-                                {this.state.localizacoes.map(item => {
-                                    return (
-                                        <Pin
-                                            lat={item.latitude}
-                                            lng={item.longitude}
-                                            lancamento={item.lancamento}
-                                        />
-                                    )
+                        <div style={{
+                            height: '70vh',
+                            width: "100%",
+                            borderColor: "#a60313",
+                            borderWidth: 10
+                        }}>
 
-                                })}
+                            {this.state.carregarMapa == false ? <span /> :
+                                <GoogleMapReact
+                                    defaultCenter={{ lat: 25.7358492, lng: 42.1957196 }}
+                                    defaultZoom={0}
+                                    options={this.createMapOptions}
+                                >
+                                    {this.state.localizacoes.map(item => {
+                                        return (
+                                            <Pin
+                                                key={item.lancamento.titulo}
+                                                lat={item.latitude}
+                                                lng={item.longitude}
+                                                lancamento={item.lancamento}
+                                            />
+                                        )
+
+                                    })}
 
 
-                            </GoogleMapReact>
+                                </GoogleMapReact>
 
-                            // <GoogleMapReact
-                            //     defaultCenter={{ lat: 25.7358492, lng: 42.1957196 }}
-                            //     defaultZoom={0}
-                            // >
-                            //     <AnyReactComponent
-                            //         lat={59.955413}
-                            //         lng={30.337844}
-                            //         text="My Marker"
-                            //     />
-                            // </GoogleMapReact>
-                        }
+                                // <GoogleMapReact
+                                //     defaultCenter={{ lat: 25.7358492, lng: 42.1957196 }}
+                                //     defaultZoom={0}
+                                // >
+                                //     <AnyReactComponent
+                                //         lat={59.955413}
+                                //         lng={30.337844}
+                                //         text="My Marker"
+                                //     />
+                                // </GoogleMapReact>
+                            }
+                        </div>
                     </div>
 
-
-                    {/*  ESSE NAO CARREGA NEM FUDENDO VTNC */}
-                    {/* <div style={{ height: '70vh', width: '100%' }}>
-
-                        <Map
-                            google={window.google}
-                            // onReady={() => this.carregarLocalizacoesParaOMapa}
-                            
-                            >
-                            {this.state.localizacoes.map(item =>{
-                                return(
-                                    <Marker
-                                    key={item.id}
-                                    name={item.lancamento.Titulo}
-                                    position={{lat: 37.759703, lng: -122.428093}} 
-                                    />
-                                    )
-                            })}
-                        </Map>
-                    </div> */}
-
+                    <Rodape />
                 </main>
             </div>
 
