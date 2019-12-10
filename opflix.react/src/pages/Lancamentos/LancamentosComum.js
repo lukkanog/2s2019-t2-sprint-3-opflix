@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import Axios from "axios";
 
 import estrelinha from "../../assets/img/estrela.png";
-import jureg from "../../assets/img/jureg-teste.png"
+import jureg from "../../assets/img/jureg-teste.png";
+import ProcurarIcon from "../../assets/img/procurar-icon.png";
 
 import "../../assets/css/Lancamentos.css";
 
@@ -18,32 +19,67 @@ export default class Lancamentos extends Component {
 
             favoritos: [],
             plataformas: [],
+            categorias: [],
 
-            filtroPlataforma: "",
-            filtroNome: "",
-            filtroData: "",
+
+            idCategoria: 0,
+            idPlataforma: 0,
+            filtroTitulo: "",
+
+            naoFoiEncontrado : false,
         }
     }
 
     atualizarPagina = () => {
-        const url = "http://192.168.4.16:5000/api/lancamentos";
-
-        Axios.get(url)
-            .then(response => {
-                if (response.status === 200) {
-                    this.setState({ lancamentos: response.data });
-                } else {
-                    console.log("ipa deu ruim" + response.status)
+        fetch("http://192.168.4.16:5000/api/lancamentos")
+        .then(resposta => resposta.json())
+        .then(data => {
+            this.setState({lancamentos : data});
+            this.setState(function (prevState) {
+                if (data.length <= 0) {
+                    this.setState({ naoFoiEncontrado: true });
+                } else if (data.length >= 1 && prevState.naoFoiEncontrado === true) {
+                    this.setState({ naoFoiEncontrado: false })
                 }
             })
-            .catch(error => console.log(error))
+        })
     }
 
+    carregarCategorias = () => {
+        try {
+            let token = localStorage.getItem("usuario-opflix");
 
+            fetch("http://192.168.4.16:5000/api/categorias", {
+                headers: {
+                    "Authorization": "Bearer " + token,
+                }
+            })
+                .then(resposta => resposta.json())
+                .then(data => this.setState({ categorias: data }))
+                .catch(error => console.log(error));
+        } catch (error) {
+            alert(error);
+        }
+    }
 
-    componentDidMount() {
-        this.atualizarPagina();
+    carregarPlataformas = () => {
+        try {
+            let token = localStorage.getItem("usuario-opflix");
 
+            fetch("http://192.168.4.16:5000/api/plataformas", {
+                headers: {
+                    "Authorization": "Bearer " + token
+                }
+            })
+                .then(resposta => resposta.json())
+                .then(data => this.setState({ plataformas: data }))
+                .catch(error => console.log(error));
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    carregarFavoritos = () => {
         const urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
         let token = localStorage.getItem("usuario-opflix");
 
@@ -60,51 +96,35 @@ export default class Lancamentos extends Component {
                 }
             })
             .catch(error => console.log(error))
-
-
-
-        let urlPlataformas = "http://192.168.4.16:5000/api/plataformas";
-        Axios.get(urlPlataformas, {
-            headers: {
-                "Authorization": "Bearer " + token
-            }
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    this.setState({ plataformas: response.data });
-                } else {
-                    console.log("deu ruim nos plataforma" + response.status)
-                }
-            })
-            .catch(error => console.log(error))
     }
 
-    // componentDidUpdate() {
-    //     let urlFavoritos = "http://192.168.4.16:5000/api/favoritos";
-    //     let token = localStorage.getItem("usuario-opflix")
-
-    //     if (token != null) {
-    //         Axios.get(urlFavoritos, {
-    //             headers: {
-    //                 "Authorization": "Bearer " + token
-    //             }
-    //         })
-    //             .then(response => {
-    //                 if (response.status === 200) {
-    //                     this.setState({ favoritos: response.data });
-    //                 } else {
-    //                     console.log("ipa deu ruim nos favorito" + response.status)
-    //                 }
-    //             })
-    //             .catch(error => console.log(error))
-    //     }
-    // }
-
-
-    exibirMaisTres = (event) => {
+    atualizarEstadoTitulo = (event) => {
         event.preventDefault();
-        this.setState({ quantExibida: this.state.quantExibida + 3 })
+        this.setState({ filtroTitulo: event.target.value });
+        this.setState({idPlataforma : 0, idCategoria : 0});
     }
+
+    atualizarEstadoCategoria = (event) => {
+        event.preventDefault();
+        this.setState({ idCategoria: event.target.value });
+        this.setState({idPlataforma : 0, filtroTitulo : ""})
+
+    }
+
+    atualizarEstadoPlataforma = (event) => {
+        event.preventDefault();
+        this.setState({ idPlataforma: event.target.value });
+        this.setState({idCategoria : 0, filtroTitulo : ""})
+
+    }
+
+    componentDidMount() {
+        this.atualizarPagina();
+        this.carregarFavoritos();
+        this.carregarCategorias();
+        this.carregarPlataformas();
+    }
+
 
     foiFavoritado = (id) => {
         let bool = false;
@@ -120,75 +140,178 @@ export default class Lancamentos extends Component {
     favoritar = (id) => {
         let token = localStorage.getItem("usuario-opflix");
         if (token === null) {
-          this.setState({ redirectToLogin: true })
+            this.setState({ redirectToLogin: true })
         } else {
-    
-    
-          fetch("http://192.168.4.16:5000/api/favoritos", {
-            method: "POST",
-            headers: {
-              "Authorization": "Bearer " + token,
-              "Content-type": "application/json",
-            },
-            body: JSON.stringify({
-              idLancamento: id
+
+
+            fetch("http://192.168.4.16:5000/api/favoritos", {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                    "Content-type": "application/json",
+                },
+                body: JSON.stringify({
+                    idLancamento: id
+                })
             })
-          })
-            .then(() => this.adicionarAoEstadoFavoritos(id))
-            .catch (error => console.log(error))
+                .then(() => this.adicionarAoEstadoFavoritos(id))
+                .catch(error => console.log(error))
         }
-      }
-    
-      desfavoritar = (id) => {
+    }
+
+    desfavoritar = (id) => {
         let token = localStorage.getItem("usuario-opflix");
         if (token === null) {
-          this.setState({ redirectToLogin: true })
+            this.setState({ redirectToLogin: true })
         } else {
-    
-    
-          fetch("http://192.168.4.16:5000/api/favoritos/" + id, {
-            method: "DELETE",
-            headers: {
-              "Authorization": "Bearer " + token,
-            }
-          })
-            .then(() => this.removerDoEstadoFavoritos(id))
-            .catch(error => console.log(error))
+
+
+            fetch("http://192.168.4.16:5000/api/favoritos/" + id, {
+                method: "DELETE",
+                headers: {
+                    "Authorization": "Bearer " + token,
+                }
+            })
+                .then(() => this.removerDoEstadoFavoritos(id))
+                .catch(error => console.log(error))
         }
-      }
-    
-      formatarData = (element) => {
+    }
+
+    formatarData = (element) => {
         let data = element.dataLancamento.split("T")[0];
         let ano = data.split("-")[0];
         let mes = data.split("-")[1];
         let dia = data.split("-")[2];
-    
+
         return (dia + "/" + mes + "/" + ano);
-      }
-    
-      adicionarAoEstadoFavoritos = (id) => {
+    }
+
+    adicionarAoEstadoFavoritos = (id) => {
         var lancamento = this.buscarLancamentoPorId(id);
-    
+
         this.setState((prevState, props) => ({
-          favoritos: this.state.favoritos.concat(lancamento)
+            favoritos: this.state.favoritos.concat(lancamento)
         }));
-      }
-    
-      removerDoEstadoFavoritos = (id) => {
+    }
+
+    removerDoEstadoFavoritos = (id) => {
         let lista = this.state.favoritos;
         lista = lista.filter(element => {
-          return element.idLancamento !== id;
+            return element.idLancamento !== id;
         })
         this.setState({ favoritos: lista })
-      }
-    
-    
-      buscarLancamentoPorId = (idLancamento) => {
+    }
+
+
+    buscarLancamentoPorId = (idLancamento) => {
         let lancamento = this.state.lancamentos.find(element => {
-          return element.idLancamento === idLancamento;
+            return element.idLancamento === idLancamento;
         });
         return lancamento;
-      }
+    }
+
+
+    filtrarPorTitulo = (event) => {
+        event.preventDefault();
+        var token = localStorage.getItem("usuario-opflix");
+
+        try {
+
+            if (this.state.filtroTitulo !== null && this.state.filtroTitulo !== "" && this.state.filtroTitulo.length >= 1) {
+
+                fetch("http://192.168.4.16:5000/api/lancamentos/buscar/" + this.state.filtroTitulo, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                    }
+                })
+                    .then(resposta => resposta.json())
+                    .then(data => {
+                        this.setState({ lancamentos: data });
+
+                        this.setState(function (prevState) {
+                            if (data.length <= 0) {
+                                this.setState({ naoFoiEncontrado: true });
+                            } else if (data.length >= 1 && prevState.naoFoiEncontrado === true) {
+                                this.setState({ naoFoiEncontrado: false })
+                            }
+                        });
+                    })
+                    .then(this.setState({ filtroTitulo: "" }))
+                    .catch(error => console.log(error))
+            }
+        } catch (error) {
+            this.atualizarPagina();
+        }
+    }
+
+    filtrarPorCategoria = (event) => {
+        event.preventDefault();
+        var token = localStorage.getItem("usuario-opflix");
+
+        try {
+
+            if (this.state.idCategoria != "" && this.state.idCategoria != 0) {
+
+                fetch("http://192.168.4.16:5000/api/lancamentos/filtrar/categoria/" + this.state.idCategoria, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                    }
+                })
+                    .then(resposta => resposta.json())
+                    .then(data => {
+                        this.setState({ lancamentos: data });
+                        this.setState(function (prevState) {
+                            if (data.length <= 0) {
+                                this.setState({ naoFoiEncontrado: true });
+                            } else if (data.length >= 1 && prevState.naoFoiEncontrado === true) {
+                                this.setState({ naoFoiEncontrado: false })
+                            }
+                        })
+                    })
+                    .catch(error => console.log(error))
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    filtrarPorPlataforma = (event) => {
+        event.preventDefault();
+        var token = localStorage.getItem("usuario-opflix");
+
+        try {
+
+            if (this.state.idPlataforma != "" && this.state.idPlataforma != 0) {
+
+                fetch("http://192.168.4.16:5000/api/lancamentos/filtrar/plataforma/" + this.state.idPlataforma, {
+                    headers: {
+                        "Authorization": "Bearer " + token,
+                    }
+                })
+                    .then(resposta => resposta.json())
+                    .then(data => {
+                        this.setState({ lancamentos: data });
+
+                        this.setState(function (prevState) {
+                            if (data.length <= 0) {
+                                this.setState({ naoFoiEncontrado: true });
+                            } else if (data.length >= 1 && prevState.naoFoiEncontrado === true) {
+                                this.setState({ naoFoiEncontrado: false })
+                            }
+                        })
+                    })
+                    .catch(error => console.log(error))
+            }
+        } catch (error) {
+            alert(error)
+        }
+    }
+
+    exibirMaisTres = (event) => {
+        event.preventDefault();
+        this.setState({ quantExibida: this.state.quantExibida + 3 })
+    }
+
 
     render() {
         return (
@@ -198,8 +321,59 @@ export default class Lancamentos extends Component {
                 </header>
                 <main className="container">
                     <div className="content">
-                        <h2>Todos os lançamentos</h2>
 
+                        <h2>Lista de Lançamentos</h2>
+
+                        <div className="flex-forms">
+                            <form className="form-filtro" onSubmit={this.filtrarPorTitulo}>
+                                <label className="flex-form-titulo">
+                                    <div>
+                                        <img alt="" src={ProcurarIcon}></img>
+                                        <span>Buscar</span>
+                                    </div>
+                                    <input onInput={this.atualizarEstadoTitulo} value={this.state.titulo} type="text" minLength="1" maxLength="60" placeholder="Título do lançamento buscado" />
+                                </label>
+                                <input type="submit" value="Procurar" id="submit-titulo" />
+                            </form>
+
+                            <form onSubmit={this.filtrarPorCategoria} className="form-filtro smaller">
+                                <span className="titulo-form">Filtrar por categoria</span>
+                                <br />
+
+                                <select onChange={this.atualizarEstadoCategoria} className="select" defaultValue={0} value={this.state.idCategoria}>
+                                    <option disabled value={0}>Selecione...</option>
+                                    {this.state.categorias.map(element => {
+                                        return <option label={element.nome} value={element.idCategoria} key={element.idCategoria} />
+                                    })}
+                                </select>
+                                <input type="submit" value="Filtrar" className="submit-select" />
+
+                            </form>
+
+                            <form onSubmit={this.filtrarPorPlataforma} className="form-filtro smaller">
+                                <span className="titulo-form">Filtrar por plataforma</span>
+                                <br />
+
+                                <select onChange={this.atualizarEstadoPlataforma} className="select" defaultValue={0} value={this.state.idPlataforma}>
+                                    <option disabled value={0}>Selecione...</option>
+                                    {this.state.plataformas.map(element => {
+                                        return <option label={element.nome} value={element.idPlataforma} key={element.idPlataforma} />
+                                    })}
+                                </select>
+                                <input type="submit" value="Filtrar" className="submit-select" />
+
+
+                            </form>
+                        </div>
+
+                        <button className="limpar_filtros" onClick={this.atualizarPagina}>Limpar Filtros</button>
+
+
+                        {this.state.naoFoiEncontrado == false ? null : 
+                        <p className="alert">
+                            Resultado não encontrado :/
+                        </p>
+                        }
                         {this.state.lancamentos.slice(0, this.state.quantExibida).map(element => {
                             return (
                                 <div className="box_lancamento" key={element.idLancamento}>
