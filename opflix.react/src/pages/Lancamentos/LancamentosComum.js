@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Axios from "axios";
 
 import estrelinha from "../../assets/img/estrela.png";
-import jureg from "../../assets/img/jureg-teste.png";
+// import jureg from "../../assets/img/jureg-teste.png";
 import ProcurarIcon from "../../assets/img/procurar-icon.png";
 
 import "../../assets/css/Lancamentos.css";
@@ -128,7 +128,7 @@ export default class Lancamentos extends Component {
 
     foiFavoritado = (id) => {
         let bool = false;
-        this.state.favoritos.map(element => {
+        this.state.favoritos.forEach(element => {
             if (element.idLancamento === id) {
                 bool = true;
                 return bool;
@@ -250,7 +250,7 @@ export default class Lancamentos extends Component {
 
         try {
 
-            if (this.state.idCategoria != "" && this.state.idCategoria != 0) {
+            if (this.state.idCategoria !== "" && this.state.idCategoria !== 0) {
 
                 fetch("http://192.168.4.16:5000/api/lancamentos/filtrar/categoria/" + this.state.idCategoria, {
                     headers: {
@@ -281,7 +281,7 @@ export default class Lancamentos extends Component {
 
         try {
 
-            if (this.state.idPlataforma != "" && this.state.idPlataforma != 0) {
+            if (this.state.idPlataforma !== "" && this.state.idPlataforma !== 0) {
 
                 fetch("http://192.168.4.16:5000/api/lancamentos/filtrar/plataforma/" + this.state.idPlataforma, {
                     headers: {
@@ -340,7 +340,7 @@ export default class Lancamentos extends Component {
                                 <span className="titulo-form">Filtrar por categoria</span>
                                 <br />
 
-                                <select onChange={this.atualizarEstadoCategoria} className="select" defaultValue={0} value={this.state.idCategoria}>
+                                <select onChange={this.atualizarEstadoCategoria} className="select"  value={this.state.idCategoria}>
                                     <option disabled value={0}>Selecione...</option>
                                     {this.state.categorias.map(element => {
                                         return <option label={element.nome} value={element.idCategoria} key={element.idCategoria} />
@@ -354,7 +354,7 @@ export default class Lancamentos extends Component {
                                 <span className="titulo-form">Filtrar por plataforma</span>
                                 <br />
 
-                                <select onChange={this.atualizarEstadoPlataforma} className="select" defaultValue={0} value={this.state.idPlataforma}>
+                                <select onChange={this.atualizarEstadoPlataforma} className="select" value={this.state.idPlataforma}>
                                     <option disabled value={0}>Selecione...</option>
                                     {this.state.plataformas.map(element => {
                                         return <option label={element.nome} value={element.idPlataforma} key={element.idPlataforma} />
@@ -369,7 +369,7 @@ export default class Lancamentos extends Component {
                         <button className="limpar_filtros" onClick={this.atualizarPagina}>Limpar Filtros</button>
 
 
-                        {this.state.naoFoiEncontrado == false ? null : 
+                        {this.state.naoFoiEncontrado === false ? null : 
                         <p className="alert">
                             Resultado não encontrado :/
                         </p>
@@ -401,12 +401,12 @@ export default class Lancamentos extends Component {
 
                                         {this.foiFavoritado(element.idLancamento) !== true ?
                                             <button className="btn_favoritar" id={"favoritar_" + element.idLancamento} onClick={() => this.favoritar(element.idLancamento)}>
-                                                <img src={estrelinha} className="estrelinha_btn_favoritar" alt="" />
+                                                <img alt="favoritar" src={estrelinha} className="estrelinha_btn_favoritar"/>
                                                 <p className="texto_btn_favoritar">Adicionar aos favoritos</p>
                                             </button>
                                             :
                                             <button className="btn_desfavoritar" onClick={() => this.desfavoritar(element.idLancamento)}>
-                                                <img src={estrelinha} className="estrelinha_btn_favoritar" />
+                                                <img alt="Desfavoritar" src={estrelinha} className="estrelinha_btn_favoritar" />
                                                 <p className="texto_btn_favoritar">Favorito</p>
                                             </button>
                                         }

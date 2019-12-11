@@ -47,26 +47,56 @@ export default class Login extends Component {
         event.preventDefault();
 
         let url = "http://192.168.4.16:5000/api/login";
+        
         Axios.post(url, {
             email: this.state.email,
             senha: this.state.senha,
         })
             .then(response => {
-                if (response.status===200) {
+                console.log(response);
+                if (response.status === 200) {
                     localStorage.setItem("usuario-opflix", response.data.token);
 
                     let token = localStorage.getItem("usuario-opflix");
-                    if (jsonwebtoken.decode(token).permissao==="ADMINISTRADOR") {
+                    if (jsonwebtoken.decode(token).permissao === "ADMINISTRADOR") {
                         this.props.history.push("/adm/")
                     } else {
                         this.props.history.push("/");
                     }
+                }else{
+                    console.log(response.data.mensagem);
                 }
             })
-            .catch(error =>() =>{
-                 console.log(error);
+            .catch(error => () => {
+                console.log(error);
             })
-            }
+
+        // fetch(url, {
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         email: this.state.email,
+        //         senha: this.state.senha,
+        //     }),
+        //     headers:{
+        //         "Content-type" : "application/json",
+        //     }
+        // })
+        // .then(response => {
+        //     response.json();
+        //     if (response.status == 200) {
+        //         localStorage.setItem("usuario-opflix", response.data.token);
+
+        //         let token = localStorage.getItem("usuario-opflix");
+        //         if (jsonwebtoken.decode(token).permissao === "ADMINISTRADOR") {
+        //             this.props.history.push("/adm/")
+        //         } else {
+        //             this.props.history.push("/");
+        //         }
+        //     }
+        // })
+        // .then(data => console.log(data))
+        // .catch(error => console.log(error))
+    }
 
 
     render() {
@@ -96,7 +126,7 @@ export default class Login extends Component {
                                 <input onInput={this.atualizarSenha} type="password" placeholder="*******" className="input_login" />
                             </label>
                             <input type="submit" value="Entrar" id="submit_login" />
-                            {this.state.incorreto===true ?
+                            {this.state.incorreto === true ?
                                 <p className="texto_alerta">Usuário ou senha incorretos</p>
                                 :
                                 <span />
